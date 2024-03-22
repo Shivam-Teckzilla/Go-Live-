@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="custom_purchase_token_tree_view" model="ir.ui.view">
+        <field name="name">Purchase Token</field>
+        <field name="model">purchase.token</field>
+        <field name="arch" type="xml">
+            <tree string="Inward Token">
+                <field name="name" widget="badge" decoration-bf="name"/>
+                <field name="issued_time"/>
+                <field name="state"/>
+                <field name="partner_id"/>
+                <field name="driver_name"/>
+                <field name="driver_license"/>
+                <field name="driver_mobile"/>
+                <field name="trailer"/>
+                <field name="order"/>
+                <field name="weight"/>
+            </tree>
+        </field>
+    </record>
+    <record id="custom_purchase_token_form_view" model="ir.ui.view">
+        <field name="name">Purchase Token</field>
+        <field name="model">purchase.token</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_issue" string="ISSUE TOKEN" type="object" class="oe_highlight"
+                            invisible="state != 'draft'"/>
+                    <button name="action_weight_in" string="WEIGHMENT IN" type="object" class="oe_highlight "
+                            invisible="state != 'issue'"/>
+                    <button name="send_uploading" string="Unload" type="object"
+                            class="oe_highlight " invisible="state != 'weight_in'"/>
+                    <button name="action_weight_out" string="WEIGHMENT OUT" type="object"
+                            class="oe_highlight " invisible="state != 'unloading'"/>
+
+                    <button name="action_done" string="DONE" type="object" class="oe_highlight "
+                            invisible="state != 'weight_out'"/>
+                    <button name="%(pl_token.action_reject_reason)d" string="REJECTED" type="action"
+                            class="oe_highlight" invisible="state not in ['issue','weight_in']"/>
+                    <button name="%(pl_token.action_onhold)d" string="ONHOLD" type="action" class="oe_highlight"
+                            invisible="state != 'unloading' or on_hold_button == True"/>
+                    <button name="%(pl_token.action_resume_reason)d" string="RESUME" type="action" class="oe_highlight"
+                            invisible="on_hold_button != True or resume_reason_button == True"/>
+
+                    <button name="cancel_request" string="CANCEL" confirm="Are you sure to cancel the request?"
+                            type="object"
+                            invisible="state != 'draft'"/>
+
+                    <!--                    <button name="create_invoice_debit_note"-->
+                    <!--                            invisible="button_debit_hide != True or state != 'weight_out'"-->
+                    <!--                            string="Debit Note" type="object"-->
+                    <!--                            class="oe_highlight"/>-->
+
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,issue,weight_in,unloading,weight_out,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+
+                        <button type="object" name="action_view_receipt" class="oe_stat_button"
+                                icon="fa-truck">
+                            <span class="o_form_label">Receipt</span>
+                            <!--                            <field name="receipt_count" widget="statinfo" string="Receipt"/>-->
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="On Hold" bg_color="bg-primary" invisible="show_ribbon != True"/>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="show_ribbon" invisible="1"/>
+                            <field name="token_type_id" readonly="state != 'draft'"/>
+                            <field name="hold_status" readonly="state != 'unloading'"
+                                   invisible="state != ['unloading','done']" required="state in 'unloading'"/>
+                        </group>
+                        <group>
+                            <field name="reject_reason_id" readonly="True"/>
+                            <field name="on_hold_id" readonly="True"/>
+                            <field name="resume_reason_id" readonly="True"/>
+                            <field name="on_hold_button" invisible="1"/>
+                            <field name="resume_reason_button" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Transporter &amp; Vendor Details">
+                            <form>
+                                <group>
+                                    <group>
+                                        <field name="is_dropship" widget="boolean_toggle"/>
+                                        <field name="source_so_id" domain="[('state','=','sale')]" readonly="1"
+                                               force_save="1"
+                                               invisible="is_dropship == False " string="Source SO"
+                                               options="{'no_open':True,'no_create':True}"/>
+                                        <field name="sale_token_id" readonly="1" invisible="is_dropship == False "/>
+                                        <field name="product_ids" invisible="1" widget="many2many_tags"/>
+                                        <field name="partner_id" readonly="state != 'draft'"/>
+                                        <field name="sale_order_id" readonly="state != 'draft'"
+                                               invisible="token_type_id.code != 'SL'"/>
+
+                                        <field name="city"/>
+                                        <field name="state_ids"/>
+                                        <field name="gst_number"/>
+                                        <field name="name_id" domain="[('partner_id','=',partner_id),('state','=','purchase')]"/>
+<!--                                        <field name="po_line_ids" domain="[('order_id','=',name_id),('po_token_bool','=',False)]" widget="many2many_tags"/>-->
+                                        <field name="product_id" readonly="state != 'draft'" required="1"
+                                               domain="[('id','in',product_ids)]"/>
+                                        <field name="price_unit" force_save="1"/>
+                                        <field name="party_bill_no" required='1' readonly="state != 'draft'"/>
+                                        <field name="party_bill_date" required='1' readonly="state != 'draft'"/>
+                                        <field name="party_bill_quantity" required='1' readonly="state != 'draft'"/>
+                                        <!--                                        <field name="part_bill_uom_ids" widget="many2many_tags" force_save="1"-->
+                                        <!--                                               invisible="1"/>-->
+                                        <!--                                        <field name="part_bill_uom_id" domain="[('id','in',part_bill_uom_ids)]"-->
+                                        <!--                                               options="{'no_open':True,'no_create':True}"/>-->
+                                        <field name="different_weight" invisible="1"/>
+                                        <field name="button_debit_hide" invisible="1"/>
+                                        <!--                                        <field name="gr_number" required='1' readonly="state != 'draft'"/>-->
+                                        <!--                                        <field name="gr_date" required='1' readonly="state != 'draft'"/>-->
+                                    </group>
+                                    <group>
+                                        <field name="trailer_type_id" readonly="state != 'draft'"/>
+                                        <field name="trailer" readonly="state != 'draft'"/>
+                                        <field name="driver_name" readonly="state != 'draft'"/>
+                                        <field name="driver_license" readonly="state != 'draft'"/>
+                                        <field name="driver_mobile" readonly="state != 'draft'"/>
+                                    </group>
+
+                                </group>
+                                <group string="Details" invisible="is_dropship == False">
+                                    <group>
+                                        <field name="gr_no" widget="char"/>
+                                        <field name="gr_date"/>
+                                        <field name="excise_no" widget="char"/>
+                                        <field name="excise_date"/>
+                                    </group>
+                                    <group>
+                                        <field name="permit_no" widget="char"/>
+                                        <field name="permit_date"/>
+                                        <field name="bt_no" widget="char"/>
+                                    </group>
+
+
+                                </group>
+                            </form>
+                        </page>
+                        <page string="Gate Entry &amp; Exit Details">
+                            <form>
+                                <group>
+                                    <group>
+                                        <field name="issued_time" readonly="state != 'draft'"/>
+                                        <field name="gentry_in_time" readonly="state != 'draft'"/>
+                                    </group>
+                                </group>
+                            </form>
+                        </page>
+                        <page string="Weighment Details"
+                              invisible="state not in ['weight_in','unloading','weight_out','done']">
+                            <form>
+                                <p>
+                                    Weighmentment In
+                                </p>
+                                <div>
+                                    <div style="width:50%;float: left">
+                                        <label for="gross_weight" string="Gross Weight"/>
+                                        <field name="gross_weight" style="padding-left:5px;" nolabel="1"
+                                               readonly="state != 'weight_in'"
+                                               options="{'required': [('state', '=', 'weight_in')]}"/>
+                                        <field name="uom_id" readonly="1" options="{'no_open':True}"/>
+                                    </div>
+                                    <div style="width:50%;float: left">
+                                        <label for="weight_in_user_id" string="Weighment In By"/>
+                                        <field name="weight_in_user_id" style="padding-left:5px;" nolabel="1"
+                                               readonly="state != 'draft'"/>
+                                        <br/>
+                                        <label for="weightment_in_datetime" string="Weighment In Datetime"/>
+                                        <field name="weightment_in_datetime" style="padding-left:5px;"
+                                               readonly="state != 'draft'"/>
+                                    </div>
+                                </div>
+
+                                <p invisible="state not in ['weight_out', 'done']">
+                                    Weighmentment Out
+                                </p>
+                                <div>
+                                    <div style="width:50%;float: left">
+                                        <label for="tare_weight" string="Tare Weight"
+                                               invisible="state not in ['weight_out','done']"/>
+                                        <field name="tare_weight" readonly="state != 'weight_out'" style="width:50px;padding-left:5px;"
+                                               options="{'required': [('state', '=', 'weight_out')]}"
+                                               invisible="state not in ['weight_out','done']"/>
+                                        <field name="uom_id" readonly="1" options="{'no_open':True}"/>
+                                        <br/>
+                                        <label for="net_weight" string="Net Weight"
+                                               invisible="state not in ['weight_out','done']"/>
+                                        <field name="net_weight" invisible="state not in ['weight_out','done']" style="padding-left:5px;"
+                                               readonly="1"/>
+                                    </div>
+                                    <div style="width:50%;float: left">
+                                        <label for="weight_in_user_out" string="Weighment Out By"/>
+                                        <field name="weight_in_user_out" style="padding-left:5px;"
+                                               invisible="state not in ['weight_out','done']"
+                                               readonly="state != 'draft'" options="{'no_open':True}"/>
+                                        <br/>
+                                        <label for="weightment_out_datetime" string="Weighment out Datetime"/>
+                                        <field name="weightment_out_datetime" style="padding-left:5px;"
+                                               invisible="state not in ['weight_out','done']"
+                                               readonly="state != 'draft'"/>
+                                    </div>
+                                </div>
+                            </form>
+                        </page>
+
+                        <page string="Unloading Details" invisible="state not in ['unloading', 'weight_out', 'done']">
+                            <form>
+                                <group>
+                                    <group>
+                                        <field name="physically_checked_by" readonly="state != 'unloading'"/>
+                                        <field name="uploading_supervisor" readonly="state != 'unloading'"/>
+                                    </group>
+                                    <group>
+                                        <field name="sample_token" readonly="state != 'unloading'"/>
+                                        <field name="sample_taken_by" readonly="state != 'unloading'"
+                                               invisible="sample_token != 'yes'"/>
+                                    </group>
+                                </group>
+                            </form>
+                        </page>
+
+                    </notebook>
+                    <!-- <label for="remarks" readonly="state != 'draft'"/>
+                    <field name="remarks" nolabel="1" placeholder="Remarks..."/> -->
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_inward_token" model="ir.actions.act_window">
+        <field name="name">Purchase Token</field>
+        <field name="res_model">purchase.token</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <record id="action_inward_token_draft" model="ir.actions.act_window">
+        <field name="name">Token</field>
+        <field name="res_model">purchase.token</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="pl_token.custom_purchase_token_tree_view"/>
+        <field name="domain">[('state', '=', 'draft')]</field>
+    </record>
+
+    <record id="action_inward_token_issued" model="ir.actions.act_window">
+        <field name="name">Token</field>
+        <field name="res_model">purchase.token</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="pl_token.custom_purchase_token_tree_view"/>
+        <field name="domain">[('state', '=', 'issue')]</field>
+    </record>
+
+    <record id="action_inward_token_weighment_in" model="ir.actions.act_window">
+        <field name="name">Token</field>
+        <field name="res_model">purchase.token</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="pl_token.custom_purchase_token_tree_view"/>
+        <field name="domain">[('state', '=', 'weight_in')]</field>
+    </record>
+
+    <record id="action_inward_token_uploading" model="ir.actions.act_window">
+        <field name="name">Token</field>
+        <field name="res_model">purchase.token</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="pl_token.custom_purchase_token_tree_view"/>
+        <field name="domain">[('state', '=', 'unloading')]</field>
+    </record>
+
+    <record id="action_inward_token_weighment_out" model="ir.actions.act_window">
+        <field name="name">Token</field>
+        <field name="res_model">purchase.token</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="pl_token.custom_purchase_token_tree_view"/>
+        <field name="domain">[('state', '=', 'weight_out')]</field>
+    </record>
+
+    <record id="action_complete" model="ir.actions.act_window">
+        <field name="name">Token</field>
+        <field name="res_model">purchase.token</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="pl_token.custom_purchase_token_tree_view"/>
+        <field name="domain">[('state', '=', 'done')]</field>
+    </record>
+
+    <record id="action_of_cancel" model="ir.actions.act_window">
+        <field name="name">Cancel</field>
+        <field name="res_model">purchase.token</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="pl_token.custom_purchase_token_tree_view"/>
+        <field name="domain">[('state', '=', 'cancel')]</field>
+    </record>
+
+    <record id="action_of_rejected" model="ir.actions.act_window">
+        <field name="name">Cancel</field>
+        <field name="res_model">purchase.token</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="pl_token.custom_purchase_token_tree_view"/>
+        <field name="domain">[('state', '=', 'reject')]</field>
+    </record>
+
+
+</odoo>

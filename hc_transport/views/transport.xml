@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+   <data>
+       <record id="transport_management_view_form" model="ir.ui.view">
+            <field name="name">transport.token.form</field>
+            <field name="model">transport.token</field>
+            <field name="arch" type="xml">
+                <form string="Registration">
+                <header>
+					<button name="action_confirm" string="Confirm" type="object" class="btn-primary" invisible="state != 'draft'" />
+                    <button name="action_rejeceted" string="Rejected" type="object" class="btn-primary" invisible="state == 'draft'"/>
+					<button name="cancel_request" string="Cancel"  type="object"/>
+					<field name="state" widget="statusbar" 
+                    statusbar_visible="draft,approval_pending,rejected,approved,cancle"
+                    />
+				</header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                       
+                        <button type="object" name ="action_view_approval"
+                            class="oe_stat_button"
+                            icon="fa-pencil-square-o" string="Approval">
+                            <!-- <field name="approval_count" widget="statinfo" string="Approval"/> -->
+                        </button>
+                    </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name2" required="1" placeholder="Transporter Name"/>
+                            </h1>
+                        </div>
+                   <notebook>
+						<page string="Transporter Details">
+							<form>
+								<group>
+                                    <group>
+                                    	<field name="transporter_name" invisible='1' />
+                                       
+                                            <label for="transporter_name" string="Address"/>
+                                            <div class="o_address_format">
+                                                <field name="transporter_street" placeholder="Street..." class="o_address_street"/>
+                                                <field name="transporter_street2" placeholder="Street 2..." class="o_address_street"/>
+                                                <field name="transporter_city" placeholder="City" class="o_address_city"/>
+                                                <field name="transporter_state" class="o_address_state" placeholder="State" options='{"no_open": True}'/>
+                                                <field name="transporter_pin" placeholder="ZIP" class="o_address_zip"/>
+                                                <field name="transporter_country" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+                                            </div>
+                                            <field name="l10n_in_gst_treatment" />
+                                            <field name ="gst_number" placeholder="e.g. BE0477472701" />
+                                             <field name="l10n_in_pan" placeholder="e.g. ABCTY1234D" />
+                                            <field name="cin_number"/>
+                                        
+									</group>
+									<group>
+                                        <field name="transporter_phone" widget="phone"/>
+										<field name="email" widget="email" />
+										<field name="website" string="Website" widget="url" placeholder="e.g. https://www.odoo.com"/>
+										<field name="product_id" />/
+										
+									</group>
+								</group>
+							</form>
+						</page>
+                        <page string="Fleet Information">
+							<form>
+								<group>
+                                    	<field name="no_truck" />
+                                        <field name="truck_details_ids" >
+                                            <tree editable="bottom">
+                                                <field name="truck_type"/>
+                                                <field name="chassis_number"/>
+                                                <field name="regi_number" widget="char"/>
+                                                <field name="truck_no"/>
+                                               
+                                            </tree>
+                                        </field>
+								
+								</group>
+							</form>
+						</page>
+                        <page string="Bank Details">
+							<form>
+								<group>
+                                    
+									<group string="Bank Details">
+                                        <field name="bank" />
+                                       
+                                        <field name="ifsc_code" />
+                                        <field name="account_number" />
+                                        <field name="account_name" />
+									</group>
+
+                                    <group string="Accounting Entries">
+                                        <field name="currency_id" invisible="1"/>
+                                        <field name="payment_terms" />
+                                        <field name="fiscal_position" />
+                                        <field name="property_account_receivable_id"/>
+                                        <field name="property_account_payable_id"/>
+                                    </group>
+								</group>
+							</form>
+						</page>
+					</notebook>
+                </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="transport_management_view_tree" model="ir.ui.view">
+           <field name="name">transport.token.tree</field>
+           <field name="model">transport.token</field>
+           <field name="arch" type="xml">
+               <tree>
+                   <field name="name2" />
+                   <field name="transfer_date" />
+                   <field name="state" />
+                   <field name="truck_no" />
+                   <field name="product_id" />
+               </tree>
+           </field>
+        </record>
+
+    <record id="action_transport_management" model="ir.actions.act_window">
+       <field name="name">Transporter Registration</field>
+       <field name="res_model">transport.token</field>
+       <field name="view_mode">tree,form</field>
+       <field name="help" type="html">
+           <p class="o_view_nocontent_smiling_face">
+               Transporter Registration Record
+           </p>
+       </field>
+    </record>
+
+
+    
+
+
+
+</data>
+</odoo>

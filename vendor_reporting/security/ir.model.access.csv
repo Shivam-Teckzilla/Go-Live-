@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+vendor_reporting.access_purchase_reporting_wizard,access_purchase_reporting_wizard,vendor_reporting.model_purchase_reporting_wizard,base.group_user,1,1,1,1
+vendor_reporting.access_purchase_report_excel,access_purchase_report_excel,vendor_reporting.model_purchase_report_excel,base.group_user,1,1,1,1
+vendor_reporting.access_sauda_report,access_sauda_report,vendor_reporting.model_sauda_report,base.group_user,1,1,1,1

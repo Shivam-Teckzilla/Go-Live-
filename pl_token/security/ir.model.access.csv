@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+pl_token.access_purchase_token,access_purchase_token,pl_token.model_purchase_token,base.group_user,1,1,1,1
+pl_token.access_reject_reason,access_reject_reason,pl_token.model_reject_reason,base.group_user,1,1,1,1
+pl_token.access_token_type,access_token_type,pl_token.model_token_type,base.group_user,1,1,1,1
+pl_token.access_trailer_type,access_trailer_type,pl_token.model_trailer_type,base.group_user,1,1,1,1
+pl_token.access_reject_name,access_reject_name,pl_token.model_reject_name,base.group_user,1,1,1,1
+pl_token.access_reason_reason,access_reason_reason,pl_token.model_reason_reason,base.group_user,1,1,1,1
+pl_token.access_on_hold,access_on_hold,pl_token.model_on_hold,base.group_user,1,1,1,1
+pl_token.access_sale_token,access_sale_token,pl_token.model_sale_token,base.group_user,1,1,1,1
+pl_token.access_so_reject_reason,access_so_reject_reason,pl_token.model_so_reject_reason,base.group_user,1,1,1,1
+
+pl_token.access_resume_reason,access_resume_reason,pl_token.model_resume_reason,base.group_user,1,1,1,1
+confirm_lock,access_confirm_lock_po_wizard,model_confirm_lock_po_wizard,base.group_user,1,1,1,1

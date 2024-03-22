@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="custom_token_purchase_raw_materials_seq" model="ir.sequence">
+            <field name="name">Token Purchase - Raw Material Seq</field>
+            <field name="code">purchase.token.raw</field>
+            <field name="prefix">RM/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        
+        <record id="custom_token_purchase_others_seq" model="ir.sequence">
+            <field name="name">Token Purchase - Others Seq</field>
+            <field name="code">purchase.token.other</field>
+            <field name="prefix">OT/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        
+        <record id="custom_token_purchase_sales_return_seq" model="ir.sequence">
+            <field name="name">Token Purchase - Sales Return Seq</field>
+            <field name="code">purchase.token.sales.return</field>
+            <field name="prefix">SR/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="custom_token_purchase_dc_seq" model="ir.sequence">
+            <field name="name">Token DC Seq</field>
+            <field name="code">purchase.token.dc</field>
+            <field name="prefix">DC/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

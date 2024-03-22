@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="pl_custome_onhold_tree_view" model="ir.ui.view">
+        <field name="name">Token Reason</field>
+        <field name="model">reason.reason</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name='on_hold'/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="pl_custome_onhold_form_view" model="ir.ui.view">
+        <field name="name">Token Reason</field>
+        <field name="model">reason.reason</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name='on_hold' required='1'/>
+                            <field name="token_status" required='1'/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_on_hold" model="ir.actions.act_window">
+        <field name="name">Token Reason</field>
+        <field name="res_model">reason.reason</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

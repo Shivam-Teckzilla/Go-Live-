@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="pl_token_type_tree_view" model="ir.ui.view">
+        <field name="name">purchase.token</field>
+        <field name="model">token.type</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name='token_type'/>
+                <field name='code'/>
+                <field name='for_token_type' />
+            </tree>
+        </field>
+    </record>
+
+    <record id="pl_token_type_form_view" model="ir.ui.view">
+        <field name="name">Token Type</field>
+        <field name="model">token.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="generate_sequence" string="Generate Sequence"
+                            invisible="sequence_button_hide == True" type="object" class="oe_highlight"/>
+
+                </header>
+
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object" name="open_related_seq" icon="fa-list">
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name='token_type' required='1'/>
+                            <field name='code' required='1'/>
+                            <field name='for_token_type' required='1' />
+                            <field name="sequence_button_hide" invisible="1"/>
+                            <field name="sequence_id" invisible="1"/>
+                            <field name="product_category" options="{'no_create': True, 'no_open': True}" required="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_token_type" model="ir.actions.act_window">
+        <field name="name">Token Type</field>
+        <field name="res_model">token.type</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

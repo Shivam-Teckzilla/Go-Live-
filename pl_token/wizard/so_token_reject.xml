@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="so_reject_reason_sale_token_form_view" model="ir.ui.view">
+            <field name="name">So Reject Reason</field>
+            <field name="model">so.reject.reason</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="so_reject_reason_id"/>
+                            <field name="record_id" invisible="1"/>
+
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="so_token_reject_reason" string="Reject" class="oe_highlight" type="object" data-hotkey="q" />
+                        <button special="cancel" data-hotkey="z" string="Cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_so_reject_reason" model="ir.actions.act_window">
+            <field name="name">Reject Reason</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">so.reject.reason</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

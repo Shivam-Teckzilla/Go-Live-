@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <menuitem id="transport_main_menu_root"
+             name="Transporter" web_icon="hc_transport,static/description/transporter.png"/>
+        
+        
+        <menuitem id="transport_main_tbs"
+             name="TBS"
+             parent="transport_main_menu_root"
+             sequence="1"/> 
+
+            <menuitem id="transport_menu_tbs_sale"
+                name="TBS Sale"
+                parent="transport_main_tbs"
+                action="action_tbs_sale"
+                sequence="1"/>
+
+            <menuitem id="transport_menu_tbs_purchase"
+                name="TBS Purchase"
+                parent="transport_main_tbs"
+                action="action_tbs_purchase"
+                sequence="2"/>
+        
+        <menuitem id="transport_main_registration"
+             name="Registration"
+             parent="transport_main_menu_root"
+             sequence="0"/> 
+
+            <menuitem id="transport_menu_in_registration"
+                name="Transporter Registration"
+                parent="transport_main_registration"
+                action="action_partner_form"
+                sequence="2"/> 
+
+    
+        <menuitem id="transport_main_purchase_transfer"
+             name="Purchase Transfer"
+             parent="transport_main_menu_root"
+             sequence="2"/> 
+
+            <menuitem id="transport_menu_in_registration_purchase"
+                name="Purchase Transfer"
+                parent="transport_main_purchase_transfer"
+                sequence="1"/>
+
+        <!-- <menuitem id="transport_main_rates"
+             name="Rates"
+             parent="transport_main_menu_root"
+             sequence="3"/> 
+
+            <menuitem id="transport_menu_in_registration_rates"
+                name="Rates"
+                parent="transport_main_rates"
+                action="action_transport_rates_management"
+                sequence="1"/> -->
+
+        <menuitem id="token_type_id"
+              name="Configuration"
+              parent="transport_main_menu_root"
+              sequence="4"/>
+
+              <menuitem id="menu_trailer_type_sub"
+              name="Truck Type"
+              parent="token_type_id"
+              action="action_trailer_type"/>
+
+
+             <menuitem id="transport_menu_in_registration_rates"
+                name="Transporter Rates"
+                parent="token_type_id"
+                action="action_transport_rates_management"
+                sequence="1"/> 
+
+            <menuitem id="customer_menu_in_rates"
+                name="Customer Rates"
+                parent="token_type_id"
+                action="action_customer_management"
+                sequence="2"/>
+
+            <menuitem id="transport_menu_in_depot"
+                name="Depot"
+                parent="token_type_id"
+                action="action_transporter_location"
+                sequence="3"/>
+
+</odoo>

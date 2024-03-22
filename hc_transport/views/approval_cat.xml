@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_approval_request_form_inherit" model="ir.ui.view">
+        <field name="name">approval.request.form.inherit</field>
+        <field name="model">approval.request</field>
+        <field name="inherit_id" ref="approvals.approval_request_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button type="object" name ="view_related_doc"
+                            class="oe_stat_button"
+                            icon="fa-pencil-square-o" string="Related Doc">
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+        <record id="view_product_category_form_inherited" model="ir.ui.view">
+        <field name="name">product.category.form.inherited</field>
+        <field name="model">product.category</field>
+        <field name="inherit_id" ref="product.product_category_form_view"/>
+        <field name="arch" type="xml">
+           
+            <xpath expr="//field[@name='parent_id']" position="after">
+                <field name = "seq_id"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

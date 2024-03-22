@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+        <record id="customer_details_wizard_form" model="ir.ui.view">
+                <field name="name">customer.details.wizard.form</field>
+                <field name="model">customer.details.wizard</field>
+                <field name="arch" type="xml">
+                    <form string="Customer Details">
+                    <group>
+                        <group colspan="1" col="1">
+                            <field name="demurrage_day" />                        
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="submit_details" string = "Submit"  type="object" class="btn-primary"/>
+                        <button string="Cancel" class ="oe_highlight" special ="cancel"/>
+                    </footer>
+                    </form>
+                </field>
+            </record>
+
+        <record id="customer_details_wizard_action" model="ir.actions.act_window">
+            <field name="name">Customer Details</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">customer.details.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="customer_details_wizard_form"/>
+            <field name="target">new</field>
+        </record>
+        
+    </data>
+</odoo>

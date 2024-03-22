@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+hc_transport.access_transport_token,access_transport_token,hc_transport.model_transport_token,base.group_user,1,1,1,1
+hc_transport.access_transport_rates,access_transport_rates,hc_transport.model_transport_rates,base.group_user,1,1,1,1
+hc_transport.access_location_rate,access_location_rate,hc_transport.model_location_rate,base.group_user,1,1,1,1
+hc_transport.access_truck_details,access_truck_details,hc_transport.model_truck_details,base.group_user,1,1,1,1
+
+hc_transport.access_tbs_sale,access_tbs_sale,hc_transport.model_tbs_sale,base.group_user,1,1,1,1
+hc_transport.access_tbs_sale_settlement_lines,access_tbs_sale_settlement_lines,hc_transport.model_tbs_sale_settlement_lines,base.group_user,1,1,1,1
+hc_transport.access_transporter_location,access_transporter_location,hc_transport.model_transporter_location,base.group_user,1,1,1,1
+hc_transport.access_customer_details_wizard,access_customer_details_wizard,hc_transport.model_customer_details_wizard,base.group_user,1,1,1,1

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    <record id="view_sale_order_form_inherit1" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit1</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+               
+                <xpath expr="//button[@name='action_confirm']" position="after">
+                     <button name="tax_invoice_pdf_print"  string="Tax Invoice" type="object" class="oe_highlight" />
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="view_purchase_order_form_inherit1" model="ir.ui.view">
+            <field name="name">purchase.order.form.inherit1</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+               
+                <xpath expr="//button[@name='button_confirm']" position="after">
+                     <button name="purchase_tax_invoice_pdf_print"   string="Tax Report" type="object" class="oe_highlight" />
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

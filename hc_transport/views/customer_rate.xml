@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+   <data>
+    <!-- customer rate -->
+
+    <record id="customer_rates_view_form" model="ir.ui.view">
+            <field name="name">customer.rates.form</field>
+            <field name="model">transport.rates</field>
+            <field name="arch" type="xml">
+                <form string="Registration">
+                <header>
+					<button name="action_send_for_approval" string="Send For Approval" type="object"
+                    invisible="state != 'draft'" class="btn-primary"  />
+                    <button name="cancel_request" string="Cancel"  type="object"/>
+					<field name="state" widget="statusbar" 
+                    statusbar_visible="draft,approval_pending,rejected,approved,cancle"
+                    />
+                    <button name="action_resend_draft" string="Reset To Draft" type="object"
+                     invisible="state == 'draft'" class="btn-primary"  />
+				</header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                       
+                        <button type="object" name ="action_view_approval"
+                            class="oe_stat_button" invisible="state == 'draft'"
+                            icon="fa-pencil-square-o" string="Approval">
+                        </button>
+                    </div>
+                
+                   <group>
+                       <group>
+                        
+                        <field name = "rate_for" invisible = "1" readonly="state != 'draft'"/>
+                        <field name="transporter" invisible="rate_for != 'transporter'"
+                           domain="[('partner_type', '=', 'transporter')]"
+                            readonly="state != 'draft'" 
+                            required="rate_for == 'transporter'"/>
+                        <field name = "customer_id" invisible="rate_for != 'customer'" 
+                            domain="[('partner_type', '!=', 'transporter')]"  
+                            readonly="state != 'draft'" required="rate_for == 'customer'" />
+
+
+                       </group>
+                       <group>
+                           <field name="transporter_tolerance" readonly="1" required='1'/>
+                       </group>
+                   </group>
+                   <notebook>
+                        <page string="Location Wise Rates">
+                            <field name="location_rates_ids" readonly="state != 'draft'">
+                                <tree string="Loction Wise Rates" editable="bottom">
+                                    <field name="effective_date" />
+                                    <field name="locations" />
+                                    <field name="deport_charge"/>
+                                    <field name="contract_start" />
+                                    <field name="contract_end"/>
+<!--                                    <field name="demurrage_day"/>-->
+                                    <field name="demurrage_charge" />
+                                    <field name="rate_total"/>
+                                    <field name="states" widget="badge" />
+                                </tree>
+                            </field>
+                        </page>
+                        
+					</notebook>
+                </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record id="view_tree_customer_rate" model="ir.ui.view">
+            <field name="name">customer.rates.tree</field>
+            <field name="model">transport.rates</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="customer_id" />
+                </tree>
+            </field>
+        </record>
+
+    <record id="action_customer_management" model="ir.actions.act_window">
+       <field name="name">Customer Rates</field>
+       <field name="res_model">transport.rates</field>
+       <field name="context">{'default_rate_for': 'customer', 'default_supplier_rank': 1}</field>
+       <field name="domain">[('rate_for', '=', 'customer')]</field>
+       <field name="view_mode">tree,form</field>
+       <field name="help" type="html">
+           <p class="o_view_nocontent_smiling_face">
+               customer Rates Record
+           </p>
+       </field>
+        <field name="view_id" ref="view_tree_customer_rate"/>
+    </record>
+
+</data>
+</odoo>

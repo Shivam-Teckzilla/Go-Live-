@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="purchase_order_template">
+        <t t-call="web.html_container">
+        <t t-call="web.external_layout">   
+        <div class="page">
+            <div class ="text-center">
+                <h2>Purchase Order Vendor Reporting
+            </h2>
+            </div>
+            <table class="table table-condensed">
+                <tr>      
+                    <th style="border: 0px ;" class="text-left">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</th>
+                    <th style="border: 0px ;" class="text-left">From Date:<td t-esc="data['start_date']" class="text-left"></td> </th>
+                    <th style="border: 0px ;" class="text-left">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</th>
+                     <th style="border: 0px ;" class="text-left">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</th>
+                     <th style="border: 0px ;" class="text-left">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</th>
+                     <th style="border: 0px ;" class="text-left">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</th>
+                     <th style="border: 0px ;" class="text-left">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</th>
+                     <th style="border: 0px ;" class="text-left">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</th>
+                     <th style="border: 0px ;" class="text-left">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</th>
+                     <th style="border: 0px ;" class="text-left">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</th>
+                     <th style="border: 0px ;" class="text-left">To Date:<td t-esc="data['end_date']" class="text-left"></td></th>
+                     <th style="border: 0px ;" class="text-left">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</th>   
+                    </tr>
+            </table>
+                <br/>
+                <table class="table table-condensed">
+                <tr>
+                    <th style="border: 3px solid black;background-color:silver;" class="text-center">Vendor Code</th>
+	                <th style="border: 3px solid black;background-color:silver;" class="text-center">Vendor Name</th>
+                    <th style="border: 3px solid black;background-color:silver;" class="text-center">PO Number</th>
+	                    <th style="border: 3px solid black;background-color:silver;" class="text-center">PO Date</th>
+	                    <th style="border: 3px solid black;background-color:silver;" class="text-center">Item Name</th>
+	                    <th style="border: 3px solid black;background-color:silver;" class="text-center">UOM</th>
+	                    <th style="border: 3px solid black;background-color:silver;" class="text-center">Demanded QTY</th>
+	                    <th style="border: 3px solid black;background-color:silver;" class="text-center">Received QTY</th>
+                    <th style="border: 3px solid black;background-color:silver;" class="text-center">Pending QTY</th>
+	                    <th style="border: 3px solid black;background-color:silver;" class="text-center">Expexted Delivery Date</th>
+                    <th style="border: 3px solid black;background-color:silver;" class="text-center">GRN Number</th>
+                    <th style="border: 3px solid black;background-color:silver;" class="text-center">GRN Date</th>
+                    <th style="border: 3px solid black;background-color:silver;" class="text-center">PO Over Date</th>
+                    <th style="border: 3px solid black;background-color:silver;" class="text-center">Pysically Verifiec By</th>
+	                    <th style="border: 3px solid black;background-color:silver;" class="text-center">Qc Date</th>
+	                    <th style="border: 3px solid black;background-color:silver;" class="text-center">Strach</th>
+	                    <th style="border: 3px solid black;background-color:silver;" class="text-center">FM</th>
+	                    <th style="border: 3px solid black;background-color:silver;" class="text-center">Moisture</th>
+
+                </tr>
+                
+                <t t-foreach="purchase_orders" t-as="order">
+                    <t t-foreach="order.invoice_line_ids" t-as="order_lines">
+                        <tr> 
+                            <td class="text-center">
+                            </td>
+
+                            <td class="text-center">
+                                <span t-if="order.partner_id"><t t-esc="order.partner_id.name"/></span>
+                            </td>
+                            <td class="text-center">
+                                <span t-if="order_lines.purchase_order_id.name"><t t-esc="order_lines.purchase_order_id.name"/></span>
+                            </td>
+                            <td class="text-center">
+                                <span t-if="order_lines.purchase_order_id.date_order"><t t-esc="order_lines.purchase_order_id.date_order"/></span>
+                            </td>
+                            <td class="text-center">
+                                <t t-foreach="order_lines" t-as="order_line">
+                                    <t t-if="order_line.product_id">
+                                    <span t-esc="order_line.product_id.name"/>
+                                    </t>
+                                </t>
+                            </td>
+                            <td class="text-center">
+                            </td>
+                           
+                            <td class="text-center">
+                                <t t-foreach="order_lines" t-as="order_line">
+                                    <t t-if="order_line.purchase_order_id.order_line">
+                                        <t t-foreach="order_line.purchase_order_id.order_line" t-as="purchase_line">
+                                            <span t-esc="purchase_line.product_qty"/>
+                                        </t>
+                                    </t>
+                                </t>
+                            </td>
+                            <td class="text-center">
+                                <t t-foreach="order_lines" t-as="order_line">
+                                    <t t-if="order_line.purchase_order_id.order_line">
+                                        <t t-foreach="order_line.purchase_order_id.order_line" t-as="purchase_line">
+                                            <span t-esc="purchase_line.qty_received"/>
+                                        </t>
+                                    </t>
+                                </t>
+                            </td>
+                            <td class="text-center">
+                                <t t-foreach="order_lines" t-as="order_line">
+                                    <t t-if="order_line.purchase_order_id.order_line">
+                                        <t t-foreach="order_line.purchase_order_id.order_line" t-as="purchase_line">
+                                            <span t-esc="purchase_line.product_qty - purchase_line.qty_received"/>
+                                        </t>
+                                    </t>
+                                </t>
+                            </td>
+                            <td class="text-center">
+                                <span t-if="order_lines.purchase_order_id.effective_date"><t t-esc="order_lines.purchase_order_id.date_order"/></span>
+                            </td>
+                        </tr>
+                    </t>
+                </t>
+                
+    
+               
+            </table>
+        </div>
+        </t>
+        </t>
+    </template>
+</odoo>

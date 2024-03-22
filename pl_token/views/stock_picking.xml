@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<record id="view_stock_picking_form_inherit" model="ir.ui.view">
+    <field name="name">stock.picking.form.inherit</field>
+    <field name="model">stock.picking</field>
+    <field name="inherit_id" ref="stock.view_picking_form"/>
+    <field name="arch" type="xml">
+
+         <!-- <xpath expr="//button[@name='button_validate']" position="attributes">
+                <attribute name="invisible">state in ('draft', 'confirmed', 'done', 'cancel') or fetch_data_button != True</attribute>
+            </xpath> -->
+
+        <xpath expr="//field[@name='product_uom_qty']" position="replace">
+            <field name="product_uom_qty" string="Dispatch Qty" column_invisible="parent.picking_type_code != 'incoming'"/>
+            <field name="product_uom_qty" string="Demand" column_invisible="parent.picking_type_code == 'incoming'"  readonly="not is_initial_demand_editable"/>
+        </xpath>
+
+        <xpath expr="//field[@name='quantity']" position="replace">
+            <field name="quantity" string="Received Quantity" column_invisible="parent.picking_type_code != 'incoming'"/>
+            <field name="quantity" string="Quantity" readonly="not is_quantity_done_editable" column_invisible="parent.picking_type_code == 'incoming' " decoration-danger="product_uom_qty and quantity &gt; product_uom_qty and parent.state not in ['done', 'cancel']"/>
+
+        </xpath>
+
+        <xpath expr="//field[@name='quantity']" position="attributes">
+            <attribute name="string">Received Quantity</attribute>
+        </xpath>
+
+            <xpath expr="//button[@name='button_validate']" position="after">
+                <button name="action_fetch_date" string="Fetch Data" type="object" class="oe_highlight" 
+                 invisible="1"/>
+            </xpath>
+        
+
+        <xpath expr="//field[@name='origin']" position="after">
+                <field name="party_bill_number" 
+                invisible="state not in ['assigned','confirmed','done'] or picking_type_code != 'incoming'" />
+                <field name="token_id" 
+                invisible="state not in ['assigned','confirmed','done'] or picking_type_code != 'incoming'"
+                 readonly='1' />
+                <field name = "sale_order_id" invisible = '1'/>
+                <field name="fetch_data_button" invisible = "1"/>
+            </xpath>
+    </field>
+</record>
+
+<!--    Wizard-->
+    <record id="confirm_lock_po_wizard_form_view" model="ir.ui.view">
+        <field name="name">confirm.lock.po.wizard.form</field>
+        <field name="model">confirm.lock.po.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+<!--                <group>-->
+                    <label for="message" string="Do You want to Close the PO?"/>
+                    <field name="message" invisible="1" class="oe_inline"/>
+<!--                </group>-->
+                <footer>
+                    <button string="Yes" type="object" class="btn-primary" name="action_confirm_lock"/>
+                    <button string="No" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

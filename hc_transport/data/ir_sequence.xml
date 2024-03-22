@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="seq_tbs_sale" model="ir.sequence">
+            <field name="name">TBS Sale</field>
+            <field name="code">tbs.sale</field>
+            <field name="prefix">TBS/SALE/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_tbs_purchase" model="ir.sequence">
+            <field name="name">TBS Purchase</field>
+            <field name="code">tbs.purchase</field>
+            <field name="prefix">TBS/PURCHASE/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!--        Product Code (Chem)-->
+        <record id="seq_pro_categ_chem" model="ir.sequence">
+            <field name="name">Chem Category</field>
+            <field name="code">pro.categ.chem</field>
+            <field name="prefix">Chem</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!--        Product Code (Comp)-->
+        <record id="seq_pro_categ_comp" model="ir.sequence">
+            <field name="name">Comp Category</field>
+            <field name="code">pro.categ.comp</field>
+            <field name="prefix">Comp</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!--        Product Code (Corn)-->
+        <record id="seq_pro_categ_corn" model="ir.sequence">
+            <field name="name">Corn Category</field>
+            <field name="code">pro.categ.corn</field>
+            <field name="prefix">Corn</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!--        Product Code (Rice)-->
+        <record id="seq_pro_categ_rice" model="ir.sequence">
+            <field name="name">Rice Category</field>
+            <field name="code">pro.categ.rice</field>
+            <field name="prefix">Rice</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="hr_contract_view_inherit" model="ir.ui.view">
+        <field name="name">hr.contract.view.inherit</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='contract_type_id']" position="after">
+                <field name="loan_req"/>
+                <field name="interest_type" widget="radio" invisible="loan_req != True" />
+                <field name ="interest_amount" invisible="interest_type == 'without_interest'"/>
+            </xpath>
+        </field>
+     </record>
+
+     <record id="hr_employee_view_inherit" model="ir.ui.view">
+        <field name="name">hr.employee.view.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='coach_id']" position="after">
+                <field name="loan_req" invisible="1"/>
+                <field name="interest_type" invisible="1"/>
+                <field name ="interest_amount" invisible="1"/>
+            </xpath>
+        </field>
+     </record>
+
+
+     <record id="approval_category_loan_approval" model="approval.category">
+            <field name="name">Customer Loan Approval</field>
+            <field name="description">Customer Loan Approval</field>
+            <field name="sequence">90</field>
+            <field name="has_date">no</field>
+            <field name="has_period">no</field>
+            <field name="has_product">no</field>
+            <field name="has_quantity">no</field>
+            <field name="has_amount">no</field>
+            <field name="has_reference">no</field>
+            <field name="has_partner">no</field>
+            <field name="has_payment_method">no</field>
+            <field name="has_location">no</field>
+            <field name="requirer_document">optional</field>
+            <field name="approval_minimum">1</field>
+            <field name="manager_approval">approver</field>
+        </record>
+    </data>
+    
+        
+</odoo>

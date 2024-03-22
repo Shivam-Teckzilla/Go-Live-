@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <menuitem id="menu_inward_token"
+              name="Token" web_icon="pl_token,static/description/token.png"/>
+    <menuitem id="menu_inward_token_sub"
+              name="Inward Token"
+              parent="menu_inward_token"/>
+    
+
+        <menuitem
+            id="menu_action_custom_purchase_token"
+            name="Token"
+            sequence="1"
+            parent="menu_inward_token_sub"
+            action="action_inward_token"/>
+
+        <menuitem
+            id="menu_action_custom_purchase_token_draft"
+            name="Draft"
+            sequence="2"
+            parent="menu_inward_token_sub"
+            action="action_inward_token_draft"/>
+
+	<menuitem
+            id="menu_action_custom_purchase_token_issued"
+            name="Issued"
+            sequence="3"
+            parent="menu_inward_token_sub"
+            action="action_inward_token_issued"/>
+  
+        <menuitem
+            id="menu_action_purchase_token_waitnig_weighment_in"
+            name="Waiting Weighment In"
+            sequence="4"
+            parent="menu_inward_token_sub"
+            action="action_inward_token_weighment_in"/>
+        
+        <menuitem
+            id="menu_action_custom_purchase_token_unloading"
+            name="Unloading"
+            sequence="5"
+            parent="menu_inward_token_sub"
+            action="action_inward_token_uploading"/>
+
+        <menuitem
+            id="menu_action_purchase_token_waitnig_weighment_out"
+            name="Waiting Weighment Out"
+            sequence="6"
+            parent="menu_inward_token_sub"
+            action="action_inward_token_weighment_out"/>
+
+
+	<menuitem
+            id="action_custom_purchase_token_done"
+            name="Done"
+            sequence="9"
+            parent="menu_inward_token_sub"
+            action="action_complete"/>
+
+	<menuitem
+            id="action_custom_purchase_token_cancel"
+            name="Cancelled"
+            sequence="8"
+            parent="menu_inward_token_sub"
+            action="action_of_cancel"/>
+
+        <menuitem
+            id="action_custom_purchase_token_rejected"
+            name="Rejected"
+            sequence="7"
+            parent="menu_inward_token_sub"
+            action="action_of_rejected"/>
+
+
+    <menuitem id="token_type_id"
+              name="Configuration"
+              parent="menu_inward_token"/>
+
+    <menuitem id="menu_on_hold_id"
+              name="On Hold"
+              parent="token_type_id"
+              action="action_on_hold"/>
+
+    <menuitem id="menu_reject_reason_id"
+              name="Reject Name"
+              parent="token_type_id"
+              action="action_reject_name"/>
+
+    <!-- <menuitem
+            id="action_custom_purchase_token_rejected"
+            name="Rejected"
+            sequence="7"
+            parent="menu_inward_token_sub"
+            action="action_of_rejected"/> -->
+
+
+    <menuitem id="token_type_id_child"
+              name="Token Type"
+              action="action_token_type"
+              parent="token_type_id"/>
+
+    <menuitem id="menu_trailer_type_sub"
+              name="Truck Type"
+              parent="token_type_id"
+              action="action_trailer_type"/>
+
+
+    <menuitem id="menu_sale_order_teacher"
+              sequence="2"
+              name="Sale Token"
+              parent="menu_inward_token"/>
+
+     <menuitem id="menu_sale_order_teacher_sub"
+                 name="Token"
+                 action="action_sale_token"
+                 parent="menu_sale_order_teacher"
+                 sequence="0"/>
+
+        <menuitem id="menu_sale_order_draft"
+                 name="Draft"
+                 action="action_sale_token_draft"
+                 parent="menu_sale_order_teacher"
+                 sequence="1"/>
+
+        <menuitem id="menu_sale_order_issued"
+                 name="Issued"
+                 action="action_sale_token_issue"
+                 parent="menu_sale_order_teacher"
+                 sequence="2"/>
+
+        <menuitem id="menu_sale_order_weightment_in"
+                 name="Waiting Weighment In"
+                 action="action_sale_token_weight_in"
+                 parent="menu_sale_order_teacher"
+                 sequence="3"/>
+
+        <menuitem id="menu_sale_order_loading"
+                 name="Loading"
+                 action="action_sale_token_unloading"
+                 parent="menu_sale_order_teacher"
+                 sequence="4"/>
+
+
+        <menuitem id="menu_sale_order_weightment_out"
+                 name="Waiting Weighment Out"
+                 action="action_sale_token_weight_out"
+                 parent="menu_sale_order_teacher"
+                 sequence="5"/>
+
+        <menuitem id="menu_sale_order_teacher_done"
+                 name="Done"
+                 action="action_sale_token_done"
+                 parent="menu_sale_order_teacher"
+                 sequence="6"/>
+
+        <menuitem id="menu_sale_order_teacher_rejected"
+                 name="Rejected"
+                 action="action_sale_token_reject"
+                 parent="menu_sale_order_teacher"
+                 sequence="7"/>
+
+        <menuitem id="menu_sale_order_teacher_cancel"
+                 name="Cancel"
+                 action="action_sale_token_cancel"
+                 parent="menu_sale_order_teacher"
+                 sequence="8"/>
+
+</odoo>
+
+
+

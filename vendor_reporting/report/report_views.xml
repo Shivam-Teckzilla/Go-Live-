@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="paperformat_lowmargin_purchase_report" model="report.paperformat">
+	    <field name="name">European A4 low margin</field>
+	    <field name="default" eval="True" />
+	    <field name="format">A4</field>
+	    <field name="page_height">0</field>
+	    <field name="page_width">0</field>
+	    <field name="orientation">Landscape</field>
+	    <field name="margin_top">20</field>
+	    <field name="margin_bottom">10</field>
+	    <field name="margin_left">5</field>
+	    <field name="margin_right">5</field>
+	    <field name="header_line" eval="False" />
+	    <field name="header_spacing">20</field>
+	    <field name="dpi">90</field>
+	</record>
+
+    <record id="purchase_vendor_report_pdf" model="ir.actions.report">
+        <field name="name">Purchase Report</field>
+        <field name="model">purchase.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">vendor_reporting.purchase_order_template</field>
+        <field name="report_file">vendor_reporting.purchase_order_template</field>
+        <field name="binding_model_id" ref="purchase.model_purchase_order"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="vendor_reporting.paperformat_lowmargin_purchase_report"/>
+    </record>
+</odoo>

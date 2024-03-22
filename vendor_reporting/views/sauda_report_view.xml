@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+        <record id="sauda_report_form" model="ir.ui.view">
+                <field name="name">sauda_report_form</field>
+                <field name="model">sauda.report</field>
+                <field name="arch" type="xml">
+                    <form string="SAUDA">
+                    <group>
+                        <group>
+                            <field name="from_date"/>
+                            <field name="partner_ids" widget ="many2many_tags"/>
+                        </group>
+                        <group>
+                            <field name="to_date"/>
+                            <field name="purchase_ids" widget ="many2many_tags"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="file_name" invisible="1"/>
+                            <field name="output" filename="file_name" no_label="1"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="xlsx_report" string = "Report Download"  type="object" class="btn-primary"/>
+                        <button string="Cancel" class ="oe_highlight" special ="cancel"/>
+                    </footer>
+                    </form>
+                </field>
+            </record>
+
+        <record id="sauda_report_action" model="ir.actions.act_window">
+            <field name="name">SAUDA</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sauda.report</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="sauda_report_form"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="sauda_report_menu"
+            name="SAUDA"
+            parent="purchase.purchase_report_main" 
+            sequence="2"
+            action="sauda_report_action"/>
+
+    </data>
+</odoo>

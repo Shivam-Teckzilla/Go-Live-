@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+  <odoo>
+    <data>
+
+    <template id="report_empolyee_pdf">
+        <t t-call="web.html_container">
+        <t>
+            <t t-call="vendor_reporting.report_external_layout">
+                <style>
+                        td{
+                        padding:3px;
+                        }
+                        .header_text{
+                        font-size: 15px;
+                        }
+                        .font_text{
+                        font-size: 13px;
+                        }
+                        .content_text{
+                        font-size: 15px;
+                        }
+                    </style>
+                    <div class="page">                       
+                    <t t-foreach="docs" t-as="line">
+                        
+                            <div class="table-container">
+                                    <tr>
+                                        <td style="width:30%" class="header_text">
+                                        REF.NO.
+                                        </td>
+                                        <br/>
+                                        <td style="width:30%" class="header_text">
+                                        Date : 
+                                        </td>
+                                        <br/>
+                                        <br/>
+                                        <td style="width:30%" class="header_text">
+                                        To
+                                        </td>
+                                        <br/>
+                                        <td style="width:30%" class="header_text">
+                                        <b>MR.  <span t-esc="line.name" class="content_text"/> </b>
+                                        </td>
+                                        <br/>
+                                        <td style="width:30%" class="header_text">
+                                        S/o Sh.
+                                        </td>
+                                        <br/>
+                                        <td style="width:30%" class="header_text">
+                                        Address :  <span t-esc="line.private_street" class="content_text"/>
+                                        </td>
+                                        <br/>
+                                        <td style="width:30%" class="header_text">
+                                        Mobile: 
+                                        <span t-esc="line.private_phone" class="content_text"/>
+                                        </td>
+                                        <br/>
+                                    </tr>
+                            </div>
+                            <br/>
+                            <div class="table-container">
+                            <table style="width:100%;">
+                                    <tr>
+                                        <td style="width:10%" class="header_text">
+                                        <b> SUB: </b>
+                                        </td>
+                                        <td style="width:90%; text-align:center;" class="header_text">
+                                        <b> LETTER OF INTENT </b>
+                                        </td>
+                                    </tr>
+                            </table>
+                            <table style="width:100%;">
+                                    <tr>
+                                        <td style="width:100%" class="header_text">
+                                        Dear Mr. <span t-esc="line.name" class="content_text"/>, 
+                                        </td>
+                                    </tr>
+                            </table>
+                            <table style="width:100%;">
+                                    <tr>
+                                        <td style="width:100%" class="header_text">
+                                        This is with reference to your application and subsequent interview you had with us, we
+                                        are pleased to appoint you as "<b><span t-esc="line.job_id.name" class="content_text"/></b>" in our
+                                        organization on mutually agreed terms and conditions.
+                                        </td>
+                                    
+                                        <br/>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:100%" class="header_text">
+                                        You will be required to join within 10 days from the issuance of this Letter of Intent at our
+                                        Head office at Plot No. ITC -11, Second Floor, IT City, Sector-67, Mohali, Punjab. A
+                                        detailed appointment letter mentioning all terms and conditions will be issued after joining
+                                        of your duty
+                                        </td>
+                                        <br/>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:100%" class="header_text">
+                                        The letter of intent will be subject to the verification of all documents submitted by you
+                                        and satisfactory reference checks from your previous employment/service associations. 
+                                        </td>
+                                        <br/>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:100%" class="header_text">
+                                        Kindly sign the duplicate copy of this letter as token of your acceptance and submit copy
+                                        of your resignation of present employer. 
+                                        </td>
+                                    </tr>
+                            </table>
+                            <table style="width:100%;">
+                                    <tr>
+                                        <td style="width:100%" class="header_text">
+                                        Thanking you, 
+                                        </td>
+                                        <br/>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:100%" class="header_text">
+                                        Yours Faithfully,
+                                        </td>
+                                        <br/>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:100%" class="header_text">
+                                        <span t-esc="line.company_id.name" class="content_text"/>
+                                        </td>
+                                        <br/>
+                                    </tr>
+                                    <br/>
+                            </table>
+                            <br/>
+                            <br/>
+                            <table style="width:100%;">
+                                    <tr>
+                                        <td style="width:100%" class="header_text">
+                                        (Authorised Signatory) 
+                                        </td>
+                                    </tr>
+                                    <br/>
+                            </table>
+                            </div>
+                    
+                    </t>      
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+      
+
+    <template id="report_external_layout">
+    <div t-attf-class="header o_company_layout">
+                                  
+            <!-- <div class="row">
+            <t t-foreach="docs" t-as="line">
+                <div class="col-md-12" style="position: absolute; text-align: left; width: 100%;">
+                    <tr>
+                        <td class="header_text">
+                        REF.NO.
+                        </td>
+                        <td class="header_text">
+                        REF.NO.
+                        </td>
+                        <td class="header_text">
+                        REF.NO.
+                        </td>
+                        <td class="header_text">
+                        REF.NO.
+                        </td>
+
+                    </tr>
+            </div> -->
+            <!-- </t> -->
+            <!-- </div> -->
+            <div class="o_boxed_header"/>
+        </div>
+        <div 
+             t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id"
+             t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <div class="o_boxed_header"/>
+            <t t-raw="0"/>
+        </div>
+    </template>
+
+    <record id="action_empolyee_report" model="ir.actions.report">
+            <field name="name">Empolyee Report</field>
+            <field name="model">hr.employee</field> <!-- Corrected typo here -->
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">vendor_reporting.report_empolyee_pdf</field>
+            <field name="report_file">report_pdf</field>
+            <!-- <field name="binding_model_id" ref="view_employee_form"/> -->
+            <field name="binding_type">report</field>
+        </record>
+
+        
+    </data>
+</odoo>

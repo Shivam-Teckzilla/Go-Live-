@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+
+    <record id="action_pdf_report_of_weightment_ship" model="ir.actions.report">
+        <field name="name">Weighment Slip</field>
+        <field name="model">purchase.token</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">pl_token.inward_weightment_ship_pdf_report</field>
+        <field name="report_file">pl_token.inward_weightment_ship_pdf_report</field>
+        <field name="print_report_name">'Inward Token Report'</field>
+        <field name="binding_model_id" ref="model_purchase_token" />
+        <field name="binding_type">report</field>
+    </record>
+
+
+
+   
+    <template id="inward_weightment_ship_pdf_report">
+        <div t-attf-class="header o_company_layout">
+        <div class="row">
+        <t t-foreach="docs" t-as="line">
+            <div class="col-md-12" style="position: relative;">
+                <div style="width: 100%; text-align: center; font-size: 25px;">
+                   
+                </div>
+                <br/>
+                <div style="width: 100%; text-align: center; font-size: 25px;">
+                    <b>WEIGHMENT SLIP</b>
+                </div>
+                <br/>
+                <div style="width: 100%; text-align: center; font-size: 25px;">
+                   <span t-esc="line.company_id.name"/><br/>
+                </div>
+            </div>
+        
+        </t>
+        </div>
+            <div class="o_boxed_header"/>
+        </div>
+        <t t-call="web.html_container">
+        <style>
+                        
+                        td{
+                        padding:3px;
+                        }
+                        .header_text{
+                        font-size: 15px;
+                        }
+                        .font_text{
+                        font-size: 13px;
+                        }
+                        .content_text{
+                        font-size: 15px;
+                        }
+                        .page {
+                            page-break-inside: avoid;
+                        }
+
+                        .page:not(:last-child) {
+                            page-break-after: always;
+                        }
+                    </style>  
+            
+            <t t-foreach="docs" t-as="line">
+                <div class="page">
+            
+                    <div class="table-container">
+                    
+                        <table style="width:100%; border:1px solid black; ">
+                                    <tr>
+                                        <td style="width:20%;" class="header_text">
+                                        Serial No. 
+                                        </td>
+                                        <td style="width:25%;" class="header_text">
+                                        :&#160;<span t-esc="line.name"/><br/>
+                                        </td>
+                                        <td style="width:15%;" class="header_text">
+                                        </td>
+                                        <td style="width:20%;" class="header_text">
+                                        </td>
+                                         <td style="width:7%;" class="header_text">
+                                        </td>
+                                        <td style="width:13%;" class="header_text">
+                                        </td>
+                                    
+                                    </tr>
+                                    <tr>
+                                        <td style="width:20%;" class="header_text">
+                                        Material 
+                                        </td>
+                                        <td style="width:25%;" class="header_text">
+                                        :&#160;<span t-esc="line.product_id.name"/>
+                                        </td>
+                                        <td style="width:15%;" class="header_text">
+                                        PARTY
+                                        </td>
+                                        <td style="width:20%;" class="header_text">
+                                        :&#160;<span t-esc="line.partner_id.name"/>
+                                        </td>
+                                         <td style="width:7%;" class="header_text">
+                                        </td>
+                                        <td style="width:13%;" class="header_text">
+                                        </td>
+                                    
+                                    </tr>
+                                    <tr>
+                                        <td style="width:20%;" class="header_text">
+                                        Vehicel no.
+                                        </td>
+                                        <td style="width:25%;" class="header_text">
+                                        :&#160;<span t-esc="line.trailer"/>
+                                        </td>
+                                        <td style="width:15%;" class="header_text">
+                                        Bill No.
+                                        </td>
+                                        <td style="width:20%;" class="header_text">
+                                        :&#160;<span t-esc="line.party_bill_no"/>
+                                        </td>
+                                         <td style="width:7%;" class="header_text">
+                                         Date
+                                        </td>
+                                        <td style="width:13%;" class="header_text">
+                                        :&#160;<span t-esc="line.party_bill_date"/>
+                                        </td>
+                                    
+                                    </tr>
+                                    <tr>
+                                        <td style="width:20%;" class="header_text">
+                                        Gross Weight 
+                                        </td>
+                                        <td style="width:25%;" class="header_text">
+                                        :&#160;<span t-esc="line.weight_in"/>
+                                        </td>
+                                        <td style="width:15%;" class="header_text">
+                                        Date
+                                        </td>
+                                        <td style="width:20%;" class="header_text">
+                                        :
+                                        </td>
+                                         <td style="width:7%;" class="header_text">
+                                        Time
+                                        </td>
+                                        <td style="width:13%;" class="header_text">
+                                        :
+                                        </td>
+                                    
+                                    </tr>
+                                    <tr>
+                                        <td style="width:20%;" class="header_text">
+                                        Tare Weight 
+                                        </td>
+                                        <td style="width:25%;" class="header_text">
+                                        :
+                                        </td>
+                                        <td style="width:15%;" class="header_text">
+                                        Date
+                                        </td>
+                                        <td style="width:20%;" class="header_text">
+                                        :
+                                        </td>
+                                         <td style="width:7%;" class="header_text">
+                                        Time
+                                        </td>
+                                        <td style="width:13%;" class="header_text">
+                                        :
+                                        </td>
+                                    
+                                    </tr>
+                                    <tr>
+                                        <td style="width:20%;" class="header_text">
+                                        Tare Weight 
+                                        </td>
+                                        <td style="width:25%;" class="header_text">
+                                        :
+                                        </td>
+                                        <td style="width:15%;" class="header_text">
+                                        Bags
+                                        </td>
+                                        <td style="width:20%;" class="header_text">
+                                        :
+                                        </td>
+                                         <td style="width:7%;" class="header_text">
+                                        
+                                        </td>
+                                        <td style="width:13%;" class="header_text">
+                                        
+                                        </td>
+                                    
+                                    </tr>
+                                    <tr>
+                                        <td style="width:20%;" class="header_text">
+                                        Despatch Qnt.
+                                        </td>
+                                        <td style="width:25%;" class="header_text">
+                                        :
+                                        </td>
+                                        <td style="width:15%;" class="header_text">
+                                        
+                                        </td>
+                                        <td style="width:20%;" class="header_text">
+                                        
+                                        </td>
+                                         <td style="width:7%;" class="header_text">
+                                        
+                                        </td>
+                                        <td style="width:13%;" class="header_text">
+                                        
+                                        </td>
+                                    
+                                    </tr>
+                            </table>
+                            <table style="width:100%; border:1px solid black; border-collapse: collapse; border-top: 0px ">
+                                <tr>
+                                    <td style="width:50%; text-align: center" class="header_text">
+                                      
+                                    </td>
+                                    <td style="width:50%; text-align: right" class="header_text">
+                                    
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:50%; text-align: center" class="header_text">
+                                      
+                                    </td>
+                                    <td style="width:50%; text-align: right" class="header_text">
+                                    
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:50%; text-align: center" class="header_text">
+                                      
+                                    </td>
+                                    <td style="width:50%; text-align: right" class="header_text">
+                                    
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:50%; text-align: center" class="header_text">
+                                      
+                                    </td>
+                                    <td style="width:50%; text-align: right" class="header_text">
+                                    
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:50%; text-align: center" class="header_text">
+                                      
+                                    </td>
+                                    <td style="width:50%; text-align: right" class="header_text">
+                                    
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:50%; text-align: center" class="header_text">
+                                      
+                                    </td>
+                                    <td style="width:50%; text-align: right" class="header_text">
+                                    
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:50%; text-align: center" class="header_text">
+                                      
+                                    </td>
+                                    <td style="width:50%; text-align: right" class="header_text">
+                                    
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:50%; text-align: center" class="header_text">
+                                      
+                                    </td>
+                                    <td style="width:50%; text-align: right" class="header_text">
+                                    
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:50%; text-align: center" class="header_text">
+                                       <b>Prepared By</b>
+                                    </td>
+                                    <td style="width:50%; text-align: center" class="header_text">
+                                    <b>Checked By</b>
+                                    </td>
+                                </tr>
+                            </table>
+                    </div>
+                    <t t-unless="line_index == docs.length - 1">
+                    <div class="page:not(:last-child)"/>
+                </t>
+                </div>
+            </t>
+        </t>
+        <style>
+            .page-break {
+                page-break-before: always;
+            }
+        </style>
+    </template>
+
+
+</odoo>

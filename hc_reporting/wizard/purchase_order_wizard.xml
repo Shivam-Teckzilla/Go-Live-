@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+        <record id="purchase_reporting_wizard_form" model="ir.ui.view">
+                <field name="name">purchase.reporting.wizard.form</field>
+                <field name="model">purchase.reporting.wizard</field>
+                <field name="arch" type="xml">
+                    <form string="Customer Details">
+                    <group>
+                        <group colspan="1" col="1">
+                            <field name="start_date" required="1"/>
+                            <field name="selected"/>
+                            <field name="vendor_id" widget ="many2many_tags" invisible="selected != True"/>
+                            <field name="report_select" required="1"/>
+
+                        </group>
+                        <group colspan="1" col="1">
+                            <field name="end_date" required="1"/>
+                            <field name="selected_pro"/>
+                            <field name="product_name" widget ="many2many_tags" invisible="selected_pro != True"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="report_print" string = "Report Download"  type="object" class="btn-primary"/>
+                        <button string="Cancel" class ="oe_highlight" special ="cancel"/>
+                    </footer>
+                    </form>
+                </field>
+            </record>
+
+        <record id="purchase_order_wizard_action" model="ir.actions.act_window">
+            <field name="name">Date Wise Vendor Reporting</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.reporting.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="purchase_reporting_wizard_form"/>
+            <field name="target">new</field>
+        </record>
+
+        <record id="purchase_report_excle_form" model="ir.ui.view">
+                <field name="name">purchase.report.excel.form</field>
+                <field name="model">purchase.report.excel</field>
+                <field name="arch" type="xml">
+                    <form string="XLS File">
+                    <group>
+                        <field name ="file_name" invisible="1"/>
+                        <field name="excel_file" string="Download File" readonly="1" filename="file_name" />
+                    </group>
+                    <footer>
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                    </form>
+                </field>
+        </record>
+
+        <menuitem id="purchase_vendor_report" 
+            name="Date Wise Vendor Reporting" 
+            parent="purchase.purchase_report_main" 
+            sequence="100"
+            action="purchase_order_wizard_action"/>
+
+
+<!--    Pending and Booked-->
+
+    <record id="view_purchase_order_report_wizard_form" model="ir.ui.view">
+        <field name="name">purchase.order.report.wizard.form</field>
+        <field name="model">purchase.order.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Purchase Order Report Wizard">
+                <sheet>
+                    <group>
+                        <group colspan="1" col="1">
+                            <field name="start_date" required="1"/>
+                            <field name="vendor_id" widget ="many2many_tags" />
+                            <field name="order_type" required="1"/>
+
+                        </group>
+                        <group colspan="1" col="1">
+                            <field name="end_date" required="1"/>
+                            <field name="product_categ_id" options="{'no_create':True,'no_open':True}"/>
+                            <field name="product_name" widget ="many2many_tags"/>
+                            <field name="company_id"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="print_excel_report" string = "Report Download"  type="object" class="btn-primary"/>
+                        <button string="Cancel" class ="oe_highlight" special ="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+        <record id="pending_booked_order_excel_wizard_action" model="ir.actions.act_window">
+            <field name="name">Pending/Booked Reporting</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.order.report.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_purchase_order_report_wizard_form"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="pending_booked_report"
+            name="Pending/Booked Reporting"
+            parent="purchase.purchase_report_main"
+            sequence="110"
+            action="pending_booked_order_excel_wizard_action"/>
+
+
+    </data>
+</odoo>

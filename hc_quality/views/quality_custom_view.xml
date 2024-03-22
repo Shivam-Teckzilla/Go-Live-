@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--    QC Parameters-->
+
+    <record id="qc_parameter_action" model="ir.actions.act_window">
+        <field name="name">QC Parameter</field>
+        <field name="res_model">qc.parameters</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <record id="view_qc_parameter_tree" model="ir.ui.view">
+        <field name="name">qc.parameter.tree</field>
+        <field name="model">qc.parameters</field>
+        <field name="arch" type="xml">
+            <tree string="QC Parameter" editable="bottom">
+                <field name="qc_parameter"/>
+                <field name="product_category_ids" widget="many2many_tags"/>
+                <field name="min_max_type"/>
+                <field name="min_value"/>
+                <field name="max_value"/>
+                <field name="standard_value"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="qc_parameter_form_view" model="ir.ui.view">
+        <field name="name">qc.parameter.view.form</field>
+        <field name="model">qc.parameters</field>
+        <field name="arch" type="xml">
+            <form string="Qc Parameter">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="qc_parameter"/>
+                            <field name="min_value" />
+                            <field name="max_value" />
+
+                        </group>
+                        <group>
+                            <field name="standard_value"/>
+                            <field name="product_category_ids" widget="many2many_tags"/>
+                            <field name="company_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <menuitem
+            id="menu_quality_parameter"
+            name="Quality Parameter"
+            action="qc_parameter_action"
+            parent="quality_control.menu_quality_control"
+            sequence="30"/>
+
+    <record id="quality_check_form_inherit" model="ir.ui.view">
+        <field name="name">quality_check.form.inherit</field>
+        <field name="model">quality.check</field>
+        <field name="inherit_id" ref="quality_control.quality_check_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='picking_id']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <button name="open_refunds" icon="fa-list-ul" type="object" string="Open Debit Notes" class="oe_stat_button">
+                </button>
+                <button string="Check Approval" type="object" class="oe_highlight" icon="fa-list-ul"
+                name="open_records_list_view"/>
+            </xpath>
+            <xpath expr="//field[@name='product_id']" position="attributes">
+                <attribute name="readonly">quality_state != 'none'</attribute>
+            </xpath>
+            <xpath expr="//header/button[@name='do_fail']" position="after">
+                <button name="sent_to_approve" type="object" string="Sent to approve" class="btn-primary" data-hotkey="q" invisible="quality_state != 'none'"/>
+                <button name="create_debit_note" type="object"
+                        string="Submit" class="btn-primary" data-hotkey="q" invisible="quality_state != 'is_approved'"/>
+                <button name="set_to_draft" type="object"
+                        string="Set to Draft" class="btn-primary" data-hotkey="q" invisible="quality_state not in ('is_approved','sent_to_approve')"/>
+            </xpath>
+            <xpath expr="//form[1]/header[1]/button[@name='do_pass'][2]" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//header/button[@name='do_pass']" position="replace">
+            </xpath>
+
+             <xpath expr="//form[1]/header[1]/button[@name='do_fail'][2]" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//header/button[@name='do_fail']" position="replace">
+            </xpath>
+
+            <xpath expr="//field[@name='product_id']" position="after">
+                <field name="starch" readonly = "quality_state != 'none'"/>
+                <field name="moisture" readonly = "quality_state !=  'none'"/>
+                <field name="fm" readonly = "quality_state != 'none'"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="quality_alert_stage_list_inherit" model="ir.ui.view">
+        <field name="name">quality.alert.stage.list.inherit</field>
+        <field name="model">quality.alert.stage</field>
+        <field name="inherit_id" ref="quality_control.quality_alert_stage_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='done']" position="after">
+                <field name="is_rejected"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="quality_alert_form_inherit" model="ir.ui.view">
+        <field name="name">quality_alert.form.inherit</field>
+        <field name="model">quality.alert</field>
+        <field name="inherit_id" ref="quality_control.quality_alert_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form//field[@name='product_tmpl_id']" position="after">
+                <field name="starch"/>
+                <field name="moisture"/>
+                <field name="fm"/>
+            </xpath>
+            <xpath expr="//field[@name='stage_id']" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </xpath>
+            <xpath expr="//header" position="inside">
+                <field name="check_id_state" invisible="1"/>
+                <field name="status" invisible="1"/>
+               <button name="debit_note_create_fail" type="object" class="btn-primary" invisible="check_id_state != 'fail' or status == 'done' or status == 'rejected'" string="Settlement Debit Note" data-hotkey="g"/>
+               <button name="rejected_debit_note" type="object" class="btn-primary" invisible="check_id_state != 'fail' or status == 'done' or status == 'rejected'" string="Fully reject Debit Note" data-hotkey="g"/>
+            </xpath>
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <button name="open_refunds" icon="fa-list-ul" type="object" string="Open Debit Notes" class="oe_stat_button">
+                </button>
+            </xpath>
+
+<!--            <xpath expr="//field[@name='team_id']" position="after">-->
+<!--                <field name="percentage_field"/>-->
+<!--            </xpath>-->
+
+        </field>
+    </record>
+
+
+
+</odoo>

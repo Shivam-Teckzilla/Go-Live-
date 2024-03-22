@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="action_pdf_report_sale_order" model="ir.actions.report">
+        <field name="name">Sale Order</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">pl_token.sale_order_pdf_report</field>
+        <field name="report_file">pl_token.sale_order_pdf_report</field>
+        <field name="print_report_name">'Sale order Report'</field>
+        <field name="binding_model_id" ref="model_sale_order" />
+        <field name="binding_type">report</field>
+    </record>
+
+   
+    <template id="sale_order_pdf_report">
+        <div t-attf-class="header o_company_layout">
+        
+        <t t-foreach="docs" t-as="line">
+        
+            <!-- <table style="width:100%; border-collapse: collapse; border: 1px solid white;">
+                <tr>
+                    <td style="width: 20%; text-align: center; padding-left: 2px; padding-top: 20px; padding-bottom: 2px;">
+                        <img t-if="line.company_id.logo" t-att-src="image_data_uri(line.company_id.logo)" style="height: 65px; width: 90px;" alt="Logo" class="mx-auto d-block" /> 
+                    </td>
+        
+                    <td style="width: 80%; font-size: 14px; text-align: center;">
+                        TAX INVOICE      Ack No. : <br/>
+                        <b><span t-esc="line.company_id.name.upper()"/></b><br/>
+                        <span t-esc="line.company_id.street"/>, <span t-esc="line.company_id.street2"/>
+                        <span t-esc="line.company_id.city"/>, <span t-esc="line.company_id.state_id.name"/>, <span t-esc="line.company_id.zip"/><br/>
+                        Phone : <span t-esc="line.company_id.phone"/><br/>
+                    </td>
+                </tr>
+            </table> -->
+            <!-- <div class="col-9 text-left">
+               IRN :
+            </div>
+            <div class="col-3">
+                <p class="text-center">
+                    ORIGINAL FOR BUYER
+                </p>
+            </div> -->
+        <div class="row">
+            <div class="col-9 text-left">
+               IRN :
+            </div>
+            <div class="col-3">
+                <p class="text-center">
+                    ORIGINAL FOR BUYER
+                </p>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-10 text-center">
+               TAX INVOICE
+            </div>
+            <div class="col-2">
+                <p class="text-center;font-size: 10px">
+                    Ack No.
+                </p>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-3 text-center">
+                <img t-if="line.company_id.logo" t-att-src="image_data_uri(line.company_id.logo)" style="max-height: 65px; max-width: 90px;" alt="Logo" class="img-fluid" />
+            </div>
+            <div class="col-9">
+                <p class="text-center">
+                
+                    <b><span t-esc="line.company_id.name.upper()"/></b><br/>
+                    <span t-esc="line.company_id.street"/>, <span t-esc="line.company_id.street2"/>
+                    <span t-esc="line.company_id.city"/>, <span t-esc="line.company_id.state_id.name"/>, <span t-esc="line.company_id.zip"/><br/>
+                    Phone: <span t-esc="line.company_id.phone"/><br/>
+                </p>
+            </div>
+        </div>
+        </t>
+            <div class="o_boxed_header"/>
+        </div>
+        <t t-call="web.html_container">
+        <style>
+                        
+                        td{
+                        padding:3px;
+                        }
+                        .header_text{
+                        font-size: 15px;
+                        }
+                        .font_text{
+                        font-size: 13px;
+                        }
+                        .content_text{
+                        font-size: 15px;
+                        }
+                        .page {
+                            page-break-inside: avoid;
+                        }
+
+                        .page:not(:last-child) {
+                            page-break-after: always;
+                        }
+                    </style>  
+            
+            <t t-foreach="docs" t-as="doc">
+                <div class="page">
+            
+                    <div class="table-container">
+                        <table style="width:100%; border:1px solid black;">
+                                    <tr>
+                                        <td style="width:35%;" class="header_text">
+                                        CIN No.&#160;:&#160;
+
+                                        </td>
+                                        <td style="width:35%;" class="header_text">
+                                        Tin No.&#160;:&#160;
+                                        </td>
+                                        <td style="width:30%;" class="header_text">
+                                        Date&#160;:&#160; 
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:35%;" class="header_text">
+                                        FSSAI LICENSE No&#160;:&#160;
+
+                                        </td>
+                                        <td style="width:35%;" class="header_text">
+                                        GSTIN No&#160;:&#160;
+                                        </td>
+                                        <td style="width:30%;" class="header_text">
+                                        PAN No&#160;:&#160; 
+                                        </td>
+                                    </tr>
+                                                           
+                                </table>
+                        <table style="width:100%; border:1px solid black; border-collapse: collapse; border-top: 0px ">
+                                    <tr>
+                                        <td style="width:50%;border-right:1px solid black" class="header_text">
+                                        Buyer's Name &amp; Address
+
+                                        </td>
+                                        <td style="width:20%;" class="header_text">
+                                        Sale Order No &amp; Date
+                                        </td>
+                                        <td style="width:30%;" class="header_text">
+                                        :&#160;<span t-esc="doc.name" class="content_text"/>&#160; &amp; &#160;<span t-esc="doc.date_order" class="content_text"/> 
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:50%;border-right:1px solid black" class="header_text">
+                                            <b>
+                                            <span t-esc="doc.partner_id.name" class="content_text"/>
+                                            </b>
+                                        </td>
+                                        <td style="width:20%;" class="header_text">
+                                        Transporter
+                                        </td>
+                                        <td style="width:30%;" class="header_text">
+                                        :&#160;<span t-esc="doc.trasfer_status" class="content_text"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:50%;border-right:1px solid black" class="header_text">
+                                            <span t-esc="doc.partner_id.street" class="content_text"/>
+                                            <span t-esc="doc.partner_id.street2" class="content_text"/><br/>
+                                            
+                                        </td>
+                                        <td style="width:20%;" class="header_text">
+                                        Vehical No
+                                        </td>
+                                        <td style="width:30%;" class="header_text">
+                                        :
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td style="width:50%;border-right:1px solid black" class="header_text">
+                                            State Name :&#160;<span t-esc="doc.partner_id.city" class="content_text"/>&#160; State Code :&#160; <span t-esc="doc.company_id.zip" class="content_text"/>
+                                        </td>
+                                        <td style="width:20%;" class="header_text">
+                                        GR Number &amp; Date
+                                        </td>
+                                        <td style="width:30%;" class="header_text">
+                                        :
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:50%;border-right:1px solid black" class="header_text">
+                                        Buyer's GSTIN/UIN :&#160;  <span t-esc="doc.partner_id.vat" class="content_text"/>
+                                        
+                                        </td>
+                                        
+                                        <td style="width:20%;" class="header_text">
+                                        Excise Pass No &amp; Date
+                                        </td>
+                                        <td style="width:30%;" class="header_text">
+                                        :
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td style="width:50%;border-right:1px solid black" class="header_text">
+                                        Buyer's Tin Cst/Vat No.:&#160;
+                                        </td>
+                                        <td style="width:20%;" class="header_text">
+                                        Permit Number &amp; Date
+                                        </td>
+                                        <td style="width:30%;" class="header_text">
+                                        :
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:50%;border-right:1px solid black" class="header_text">
+                                        Buyer's Pan No.:&#160;
+                                        </td>
+                                        <td style="width:20%;" class="header_text">
+                                        BL
+                                        </td>
+                                        <td style="width:30%;" class="header_text">
+                                        :
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:50%;border-right:1px solid black" class="header_text">
+                                        Place Of Supply :&#160;
+                                        </td>
+                                        <td style="width:20%;" class="header_text">
+                                        
+                                        </td>
+                                        <td style="width:30%;" class="header_text">
+                                        
+                                        </td>
+                                    </tr>
+                            
+                                    
+                                </table>
+                                <table style="width:100%; border:1px solid black; border-collapse: collapse; border-top: 0px ">
+                                <tr>
+                                    <td style="width:6%; text-align:center;border-right:1px solid black;border-bottom:1px solid black">
+                                        <b class="font_text">Sr. No.</b>
+                                    </td>
+
+                                    
+                                    <td style="width:34%; text-align:center; border-right:1px solid black;border-bottom:1px solid black">
+                                        <b class="font_text">Description</b>
+                                    </td>
+                                    
+                                    <td style="width:10%;text-align:center; border-right:1px solid black;border-bottom:1px solid black">
+                                        <b class="font_text">HSN</b>
+                                    </td>
+                                    <td style="width:14%;text-align:center; border-right:1px solid black;border-bottom:1px solid black">
+                                        <b class="font_text">Quanity</b>
+                                    </td>
+                                    <td style="width:12%;text-align:center; border-right:1px solid black;border-bottom:1px solid black">
+                                        <b class="font_text">UNITS</b>
+                                    </td>
+                                    <td style="width:12%;text-align:center; border-right:1px solid black;border-bottom:1px solid black">
+                                        <b class="font_text">Rate/Pc</b>
+                                    </td>
+                                    <td style="width:12%;text-align:center;border-bottom:1px solid black">
+                                        <b class="font_text">Amount(Rs)</b>
+                                    </td>
+                                </tr>
+                            
+                                <t t-set="sq_no" t-value="1"/>
+                                <t t-foreach="doc.order_line" t-as="line">
+                                
+
+                                    <tr>
+                                    <td style="width:6%; text-align:center; border-right:1px solid black;border-bottom:1px solid black">
+                                            <t t-if="line.product_id">
+                                                <span t-esc="sq_no" class="content_text"/>
+                                                <t t-set="sq_no" t-value="1 + sq_no"/>
+                                            </t>
+                                        </td>
+                            
+                                    <td style="width:34%; text-align:center; border-right:1px solid black;border-bottom:1px solid black">
+                                            <span t-esc="line.product_id.name" class="content_text"/>
+
+                                        </td>
+                                    
+                                    <td style="width:10%; text-align:center; border-right:1px solid black;border-bottom:1px solid black">
+                                            
+
+                                        </td>
+
+                                    <td style="width:14%; text-align:center; border-right:1px solid black;border-bottom:1px solid black">
+                                            <span t-esc="line.product_uom_qty" class="content_text"/>
+                                        </td>
+
+                                    <td style="width:12%; text-align:center; border-right:1px solid black;border-bottom:1px solid black">
+                                            <span t-esc="line.product_uom.name"
+                                                  
+                                                  class="content_text"/>
+                                        </td>
+                                    <td style="width:12%; text-align:center; border-right:1px solid black;border-bottom:1px solid black">
+                                            <span t-esc="line.price_unit" class="content_text"/>
+
+                                        </td>
+                                
+                                    <td style="width:12%; text-align:center;border-bottom:1px solid black">
+                                            <span t-esc="line.price_subtotal" class="content_text"/>
+
+                                        </td>
+                                    </tr>
+                                </t>
+                            </table>
+                            <table style="width:100%; border:1px solid black; border-collapse: collapse; border-top: 0px ">
+                                <tr>
+                                    <th style="width:6%;text-align:center;border-right:1px solid black" class="header_text"/>
+                                    <th style="width:34%;text-align:center;border-right:1px solid black" class="header_text">Total :</th>
+                                    <th style="width:10%;text-align:center;border-right:1px solid black" class="header_text"/>
+                                    <th style="width:14%;text-align:center;border-right:1px solid black" class="header_text">
+                                    <span class="content_text"
+                                         t-esc="sum(l.product_uom_qty for l in doc.order_line)"/>
+                                    </th>
+                                    <th style="width:12%;text-align:center;border-right:1px solid black" class="header_text"></th>
+                                    <th style="width:12%;text-align:center;border-right:1px solid black" class="header_text">
+                                    </th>
+                                    <th style="width:12%;text-align:center" class="header_text">
+                                       
+                                    <span class="content_text"
+                                         t-esc="sum(l.price_subtotal for l in doc.order_line)"/>
+                                    </th>
+
+                                </tr>                    
+                            
+                            </table>
+                            <table style="width:100%; border:1px solid black; border-collapse: collapse; border-top: 0px ">
+                                    <tr>
+                                        <td style="width:50%;border-right:1px solid black" class="header_text">
+                                        UNFIT FOR HUMAN CONSUMPTION
+
+                                        </td>
+                                        <td style="width:20%;border-bottom:1px solid black" class="header_text">
+                                        FREIGHT RS.
+                                        </td>
+                                        <td style="width:30%;border-bottom:1px solid black" class="header_text">
+                                        
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:50%;border-right:1px solid black" class="header_text">
+                                            POLICY NO -
+                                        </td>
+                                        <td style="width:20%;border-bottom:1px solid black" class="header_text">
+                                        Sub Total
+                                        </td>
+                                        <td style="width:30%;border-bottom:1px solid black; text-align: right" class="header_text">
+                                        
+                                        <span class="content_text"
+                                         t-esc="sum(l.price_subtotal for l in doc.order_line)"/>
+                        
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:50%;border-right:1px solid black" class="header_text">
+                                            
+                                        </td>
+                                        <td style="width:20%;border-bottom:1px solid black" class="header_text">
+                                        Tax 
+                                        </td>
+                                        <td style="width:30%;border-bottom:1px solid black; text-align: right" class="header_text">
+                                        <span t-esc="doc.amount_tax" class="content_text"/>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td style="width:50%;border-right:1px solid black" class="header_text">
+                                        
+                                        </td>
+                                        <td style="width:20%;" class="header_text">
+                                        Sub Total
+                                        </td>
+                                        <td style="width:30%;text-align: right" class="header_text">
+                                        <span t-esc="doc.amount_total" class="content_text"/>
+                                        </td>
+                                    </tr>
+                                                           
+                                </table>
+                                <table style="width:100%; border:1px solid black; border-collapse: collapse; border-top: 0px ">
+                                    
+                                    <tr>
+                                        <td style="width:50%;border-right:1px solid black" class="header_text">
+                                        
+                                        </td>
+                                        <td style="width:20%;" class="header_text">
+                                        <b>Total</b>
+                                        </td>
+                                        <td style="width:30%;text-align: right" class="header_text">
+                                        <b><span t-esc="doc.amount_total" class="content_text"/></b>
+                                        </td>
+                                    </tr>
+                                                           
+                                </table>
+                                <table style="width:100%; border:1px solid black; border-collapse: collapse; border-top: 0px ">
+                                    
+                                    <tr>
+                                        <td style="width:100%;border-right:1px solid black" class="header_text">
+                                        <b> Amount In Word : </b> 
+                                            <span >INR</span>
+                                            <span style="text-transform: capitalize;" t-esc="doc.amount_word"/>
+                                            <span > Only</span>
+                                        </td>
+                                    </tr>
+                                                           
+                                </table>
+                                <table style="width:100%; border:1px solid black; border-collapse: collapse; border-top: 0px ">
+                                    
+                                    <tr>
+                                        <td style="width:100%;border-right:1px solid black" class="header_text">
+                                        Tax is Payble on Reverse Charge(Yes/No)-No
+                                        </td>
+                                    </tr>
+                                                           
+                                </table>
+                                <table style="width:100%; border:1px solid black; border-collapse: collapse; border-top: 0px ">
+                                    
+                                    <tr>
+                                        <td style="width:100%;border-right:1px solid black" class="header_text">
+                                        <b>Terms and Conditions</b><br/>
+                                        1. Delivery :As per Tender Terms and Conditions<br/>
+                                        2.Following Bank Account : <br/>
+                                            Beneficiary Name: <br/>
+                                            Bank Name: <br/>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:100%;border-right:1px solid black" class="header_text">
+
+                                        </td>
+                                    </tr>
+                                                           
+                                </table>
+                                <table style="width:100%; border:1px solid black; border-collapse: collapse; border-top: 0px ">
+                                    
+                                    <tr>
+                                        <td style="width:100%;border-right:1px solid black; text-align: right" class="header_text">
+                                        <b>For <span t-esc="doc.company_id.name" class="content_text"/></b><br/>
+                                        </td>
+                                    </tr>
+                                    
+                                                           
+                                </table>
+                                <table style="width:100%; border:1px solid black; border-collapse: collapse; border-top: 0px ">
+                                    
+                                    <tr>
+                                        <td style="width:30%;border-right:1px solid black; text-align: center" class="header_text">
+                                        
+                                        </td>
+                                        <td style="width:30%;border-right:1px solid black; text-align: center" class="header_text">
+                                        
+                                        </td>
+                                        <td style="width:40%;border-right:1px solid black; text-align: center" class="header_text">
+                                        
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%;border-right:1px solid black; text-align: center" class="header_text">
+                                        
+                                        </td>
+                                        <td style="width:30%;border-right:1px solid black; text-align: center" class="header_text">
+                                        
+                                        </td>
+                                        <td style="width:40%;border-right:1px solid black; text-align: center" class="header_text">
+                                        
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%;border-right:1px solid black; text-align: center" class="header_text">
+                                        
+                                        </td>
+                                        <td style="width:30%;border-right:1px solid black; text-align: center" class="header_text">
+                                        
+                                        </td>
+                                        <td style="width:40%;border-right:1px solid black; text-align: center" class="header_text">
+                                        
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%;border-right:1px solid black; text-align: center" class="header_text">
+                                        
+                                        </td>
+                                        <td style="width:30%;border-right:1px solid black; text-align: center" class="header_text">
+                                        
+                                        </td>
+                                        <td style="width:40%;border-right:1px solid black; text-align: center" class="header_text">
+                                        
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%;border-right:1px solid black; text-align: center" class="header_text">
+                                        
+                                        </td>
+                                        <td style="width:30%;border-right:1px solid black; text-align: center" class="header_text">
+                                        
+                                        </td>
+                                        <td style="width:40%;border-right:1px solid black; text-align: center" class="header_text">
+                                        
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:30%;border-right:1px solid black; text-align: center" class="header_text">
+                                        <b>Prepared By</b>
+                                        </td>
+                                        <td style="width:30%;border-right:1px solid black; text-align: center" class="header_text">
+                                        <b>Checked By</b>
+                                        </td>
+                                        <td style="width:40%;border-right:1px solid black; text-align: center" class="header_text">
+                                        <b>Authorised Signatory</b>
+                                        </td>
+                                    </tr>
+                                    
+                                                           
+                                </table>
+                        
+                    </div>
+                    <t t-unless="line_index == docs.length - 1">
+                    <div class="page:not(:last-child)"/>
+                </t>
+                </div>
+            </t>
+        </t>
+        <style>
+            .page-break {
+                page-break-before: always;
+            }
+        </style>
+    </template>
+
+
+</odoo>

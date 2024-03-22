@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="view_res_partner_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+
+            <!-- <xpath expr="//form/sheet" position="before">
+                <header>
+                    <button name="action_approval"  string="Send For Approval" 
+                               invisible="partner_type != 'transporter' or sent_for_approval == True"
+
+                    type="object" class="oe_highlight" />
+                </header>
+            </xpath> -->
+
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button type="object" name="action_view_approval"
+                        class="oe_stat_button" invisible="partner_type != 'transporter'"
+                        icon="fa-pencil-square-o" string="Approval">
+                </button>
+            </xpath>
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="partner_type" invisible='1'/>
+                <field name="sent_for_approval" invisible='1'/>
+            </xpath>
+
+            <xpath expr="//field[@name='category_id']" position="after">
+                <!--                <field name = "product_id" invisible="partner_type != 'transporter'"/>-->
+                <field name="transporter_type" required="partner_type == 'transporter'"/>
+                <field name="product_category_ids" required="partner_type == 'transporter'"
+                       domain="[('transporter','=',True)]" widget="many2many_tags"
+                       invisible="transporter_type != 'h_chem' and partner_type != 'transporter'"/>
+                <field name="product_id" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//page[@name='internal_notes']" position="after">
+                <page string="Fleet Information" invisible="partner_type != 'transporter'">
+                    <form>
+                        <group>
+                            <field name="no_truck" widget="char"/>
+                            <field name="truck_details_ids">
+                                <tree editable="bottom">
+                                    <field name="truck_type"/>
+                                    <field name="chassis_number"/>
+                                    <field name="regi_number" widget="char"/>
+                                    <field name="truck_no"/>
+                                    <field name="attachment_ids" widget="many2many_tags"
+                                           options="{'no_create_edit': True}"/>
+                                </tree>
+                            </field>
+
+                        </group>
+                    </form>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_partner_form" model="ir.actions.act_window">
+        <field name="name">Transporter Registration</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="context">{'default_partner_type': 'transporter', 'default_supplier_rank': 1, 'active_test':
+            False}
+        </field>
+        <field name="domain">[('partner_type', '=', 'transporter'),('active', '=', True)]</field>
+        <field name="view_id" ref="base.res_partner_kanban_view"></field>
+    </record>
+
+
+    <record id="view_sale_order_form_inherit" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="attributes">
+                <!-- <attribute name="widget">res_partner_many2one</attribute> -->
+                <!--                <attribute name="widget">selection</attribute>-->
+                <attribute name="domain">[('customer_rank','>',0)]</attribute>
+
+            </field>
+
+            <xpath expr="//button[@name='action_confirm']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="location_rate_id" invisible="transporter != True" required="1"/>
+                <field name="transporter" invisible="1"/>
+            </xpath>
+
+
+            <xpath expr="//page[@name='other_information']" position="inside">
+                <group>
+                    <group string="TBS Sale">
+                        <field name="total_freight_rate" readonly="1"/>
+                        <field name="tab_sale" readonly="1"/>
+                    </group>
+                </group>
+                <group>
+                    <group string="TBS Purchase">
+                        <field name="purchase_total_freight_rate" readonly="1"/>
+                        <field name="tab_purchase" readonly="1"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_purchase_order_form_inherit" model="ir.ui.view">
+        <field name="name">purchase.order.form.inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="attributes">
+                <attribute name="options">{'no_open':True,'no_create':True}</attribute>
+                <attribute name="domain">[('supplier_rank','>=',1)]</attribute>
+            </field>
+            <xpath expr="//form/header/button[@name='action_view_picking']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="custom_partner_form" model="ir.ui.view">
+        <field name="name">custom.res.partner.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//widget[@name='web_ribbon']" position="attributes">
+                    <attribute name="title">Awaiting Approval</attribute>
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="custom_res_partner_kanban_view">
+        <field name="name">custom.res.partner.kanban</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.res_partner_kanban_view"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//span[@class='text-bg-danger']" position="replace">
+                    <span class="text-bg-danger">Awaiting Approval</span>
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+
+</odoo>

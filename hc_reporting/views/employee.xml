@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_employee_form_inherit" model="ir.ui.view">
+        <field name="name">hr.employee.form.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='children']" position="after">
+                <field name="son_of"/>
+            </xpath>
+
+            <xpath expr="//form/sheet" position="before">
+                <header>
+                    <button name="report_print"  string="LOI Print" type="object" class="oe_highlight" />
+                </header>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_account_move_inherite1" model="ir.ui.view">
+            <field name="name">account.move.form.inherite</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_post']" position="after">
+                    <button name="custom_bill_pdf_print" string = "Custom Bill"
+                    domain="[('move_type', '=', 'in_invoice')]"  type="object" class="btn-primary"/>
+
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

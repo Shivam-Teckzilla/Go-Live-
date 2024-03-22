@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+
+
+    <record id="action_pdf_report_of_sale_token" model="ir.actions.report">
+        <field name="name">Sale Token Report</field>
+        <field name="model">sale.token</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">pl_token.sale_token_pdf_report</field>
+        <field name="report_file">pl_token.sale_token_pdf_report</field>
+        <field name="print_report_name">'Sale Token Report'</field>
+        <field name="binding_model_id" ref="model_sale_token" />
+        <field name="binding_type">report</field>
+    </record>
+
+
+    
+
+   
+    <template id="sale_token_pdf_report">
+        <div t-attf-class="header o_company_layout">
+        <div class="row">
+            <table style="width:100%; border-collapse: collapse; border: 1px solid white;">
+                <tr>
+                    <td style="width: 100%; text-align: center; padding-left: 2px; padding-top: 2px; padding-bottom: 2px;">
+                        <img t-if="docs[0].company_id.logo" t-att-src="image_data_uri(docs[0].company_id.logo)" style="height: 65px; width: 90px;" alt="Logo" class="mx-auto d-block" /> 
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 100%; font-size: 14px; text-align: center;">
+                        <span t-esc="docs[0].company_id.name.upper()"/><br/>
+                        <span t-esc="docs[0].company_id.street"/>, <span t-esc="docs[0].company_id.street2"/><br/>
+                        <span t-esc="docs[0].company_id.city"/>, <span t-esc="docs[0].company_id.state_id.name"/>, <span t-esc="docs[0].company_id.zip"/><br/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+            <div class="o_boxed_header"/>
+        </div>
+        <t t-call="web.html_container">
+        <style>
+                        
+                        td{
+                        padding:3px;
+                        }
+                        .header_text{
+                        font-size: 15px;
+                        }
+                        .font_text{
+                        font-size: 13px;
+                        }
+                        .content_text{
+                        font-size: 15px;
+                        }
+                        .page {
+                            page-break-inside: avoid;
+                        }
+
+                        .page:not(:last-child) {
+                            page-break-after: always;
+                        }
+                    </style>  
+            
+            <t t-foreach="docs" t-as="line">
+                <div class="page">
+            
+                    <div class="table-container">
+                        <table style="width:100%; border:1px solid white; ">
+                        <table style="width:100%; border:1px solid black; ">
+
+                            <tr>
+                                 <td  style="width: 100%; text-align: center; font-size: 18px;">
+                                    <b>
+                                    SALE TOKEN
+                                    </b><br/>
+                                </td>
+                            </tr>
+                        </table>
+                        </table>
+                    
+                        <table style="width:100%; border:1px solid black; ">
+                                    <tr>
+                                        <td style="width:20%;" class="header_text">
+                                        Sale Token No
+                                        </td>
+                                        <td style="width:30%;" class="header_text">
+                                        :&#160;<span t-esc="line.name"/><br/>
+                                        </td>
+                                        <td style="width:20%;" class="header_text">
+                                        Token Date
+                                        </td>
+                                        <td style="width:30%;" class="header_text">
+                                        :&#160;<span t-esc="line.order_id.name"/><br/>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td style="width:20%;" class="header_text">
+                                        Token Type
+                                        </td>
+                                        <td style="width:30%;" class="header_text">
+                                        :&#160;<span t-esc="line.sale_token_type_id.token_type"/><br/>
+                                        </td>
+                                        <td style="width:20%;" class="header_text">
+                                        Item
+                                        </td>
+                                        <td style="width:30%;" class="header_text">
+                                        :&#160;<span t-esc="line.temp_id.name"/><br/>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td style="width:20%;" class="header_text">
+                                        SO Ref
+                                        </td>
+                                        <td style="width:30%;" class="header_text">
+                                        :&#160;<span t-esc="line.order_id.name"/><br/>
+                                        </td>
+                                        <td style="width:20%;" class="header_text">
+                                        Truck Type
+                                        </td>
+                                        <td style="width:30%;" class="header_text">
+                                        <!-- :&#160;<span t-esc="line.party_bill_no"/><br/> -->
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td style="width:20%;" class="header_text">
+                                        Customer
+                                        </td>
+                                        <td style="width:30%;" class="header_text">
+                                        :&#160;<span t-esc="line.partner_id.name"/><br/>
+                                        </td>
+                                        <td style="width:20%;" class="header_text">
+                                        Truck No
+                                        </td>
+                                        <td style="width:30%;" class="header_text">
+                                        <!-- :&#160;<span t-esc="line.party_bill_date"/><br/> -->
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td style="width:20%;" class="header_text">
+                                        Transporter Type
+                                        </td>
+                                        <td style="width:30%;" class="header_text">
+                                        <!-- :&#160;<span t-esc="line.trasfer_status"/> -->
+                                        </td>
+                                        <td style="width:20%;" class="header_text">
+                                        Driver Name 
+                                        </td>
+                                        <td style="width:30%;" class="header_text">
+                                        :&#160;<span t-esc="line.driver_name"/>
+                                        </td>
+                                        
+                                    </tr>
+
+                                    <tr>
+                                        <td style="width:20%;" class="header_text">
+                                       Transporter Name 
+                                        </td>
+                                        <td style="width:30%;" class="header_text">
+                                        <!-- :&#160;<span t-esc="line.transfer_name"/> -->
+                                        </td>
+                                        <td style="width:20%;" class="header_text">
+                                        Driver License 
+                                        </td>
+                                        <td style="width:30%;" class="header_text">
+                                        :&#160;<span t-esc="line.driver_license"/>
+                                        </td>
+                                        
+                                    </tr>
+
+                                    <tr>
+                                        <td style="width:20%;" class="header_text">
+                                        BL
+                                        </td>
+                                        <td style="width:30%;" class="header_text">
+                                        :&#160;<span t-esc="line.bt_no"/>
+                                        </td>
+                                        <td style="width:20%;" class="header_text">
+                                        Driver Mobile
+                                        </td>
+                                        <td style="width:30%;" class="header_text">
+                                       :&#160;<span t-esc="line.driver_mobile"/>
+                                        </td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td style="width:20%;" class="header_text">
+                                        Token Issued Time
+                                        </td>
+                                        <td style="width:30%;" class="header_text">
+                                        :&#160;<span t-esc="line.issued_time"/>
+                                        </td>
+                                        <td style="width:20%;" class="header_text">
+                                        Gate Entry In Time
+                                        </td>
+                                        <td style="width:30%;" class="header_text">
+                                        :&#160;<span t-esc="line.gentry_in_time"/>
+                                        </td>
+                                        
+                                    </tr>
+
+                                    <tr>
+                                        <td style="width:20%;" class="header_text">
+                                        GR No
+                                        </td>
+                                        <td style="width:30%;" class="header_text">
+                                        :&#160;<span t-esc="line.gr_no"/>
+                                        </td>
+                                        <td style="width:20%;" class="header_text">
+                                        GR date
+                                        </td>
+                                        <td style="width:30%;" class="header_text">
+                                        :&#160;<span t-esc="line.gr_date"/>
+                                        </td>
+                                        
+                                    </tr>
+
+                                    <tr>
+                                        <td style="width:20%;" class="header_text">
+                                        Excise No
+                                        </td>
+                                        <td style="width:30%;" class="header_text">
+                                        :&#160;<span t-esc="line.excise_no"/><br/>
+
+                                        </td>
+                                        <td style="width:20%;" class="header_text">
+                                        Excise Date
+                                        </td>
+                                        <td style="width:30%;" class="header_text">
+                                        :&#160;<span t-esc="line.excise_date"/>
+                                        </td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td style="width:20%;" class="header_text">
+                                        Permit No
+                                        </td>
+                                        <td style="width:30%;" class="header_text">
+                                        :&#160;<span t-esc="line.permit_no"/>
+                                        </td>
+                                        <td style="width:20%;" class="header_text">
+                                        Permit Date
+                                        </td>
+                                        <td style="width:30%;" class="header_text">
+                                        :&#160;<span t-esc="line.permit_date"/>
+                                        </td>
+                                        
+                                    </tr>
+                    
+                                
+                            </table>
+                            <table style="width:100%; border:1px solid black; border-collapse: collapse; border-top: 0px ">
+                                <tr>
+                                    <td style="width:50%; text-align: center" class="header_text">
+                                      
+                                    </td>
+                                    <td style="width:50%; text-align: right" class="header_text">
+                                    
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:50%; text-align: center" class="header_text">
+                                      
+                                    </td>
+                                    <td style="width:50%; text-align: right" class="header_text">
+                                    
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:50%; text-align: center" class="header_text">
+                                      
+                                    </td>
+                                    <td style="width:50%; text-align: right" class="header_text">
+                                    
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:50%; text-align: center" class="header_text">
+                                      
+                                    </td>
+                                    <td style="width:50%; text-align: right" class="header_text">
+                                    
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:50%; text-align: center" class="header_text">
+                                      
+                                    </td>
+                                    <td style="width:50%; text-align: right" class="header_text">
+                                    
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:50%; text-align: center" class="header_text">
+                                      
+                                    </td>
+                                    <td style="width:50%; text-align: right" class="header_text">
+                                    
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:50%; text-align: center" class="header_text">
+                                      
+                                    </td>
+                                    <td style="width:50%; text-align: right" class="header_text">
+                                    
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:50%; text-align: center" class="header_text">
+                                      
+                                    </td>
+                                    <td style="width:50%; text-align: right" class="header_text">
+                                    
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:50%; text-align: center" class="header_text">
+                                       <b>Sign of Issuer</b>
+                                    </td>
+                                    <td style="width:50%; text-align: center" class="header_text">
+                                    <b>Sign of Driver</b>
+                                    </td>
+                                </tr>
+                            </table>
+                    </div>
+                    <t t-unless="line_index == docs.length - 1">
+                    <div class="page:not(:last-child)"/>
+                </t>
+                </div>
+            </t>
+        </t>
+        <style>
+            .page-break {
+                page-break-before: always;
+            }
+        </style>
+    </template>
+
+</odoo>
+
+
